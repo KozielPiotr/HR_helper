@@ -14,13 +14,26 @@ class TestUser:
         sample_user.assign_role(sample_role)
         assert sample_role in sample_user.roles
 
-    def test_assign_event(self, sample_user, sample_event):
-        assert sample_event not in sample_user.events
-        sample_user.assign_event(sample_event)
-        assert sample_event in sample_user.events
-        print(sample_event)
+
+@pytest.mark.usefixtures("db_session")
+class TestWorker:
+
+    def test_assign_event(self, sample_worker, sample_event):
+        assert sample_event not in sample_worker.events
+        sample_worker.assign_event(sample_event)
+        assert sample_event in sample_worker.events
 
 
+@pytest.mark.usefixtures("db_session")
+class TestFunction:
+
+    def test_set_function(self, sample_worker, sample_function):
+        assert sample_function != sample_worker.function
+        sample_function.set_function(sample_worker)
+        assert sample_function == sample_worker.function
+
+
+@pytest.mark.usefixtures("db_session")
 class TestEvent:
 
     def test_set_event_kind(self, sample_event_kind, sample_event):

@@ -1,9 +1,9 @@
 #-*- coding: utf-8 -*-
 # pylint: disable=missing-docstring, too-few-public-methods, no-member, invalid-name
 
+from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
 
 from app import db, login
 
@@ -14,7 +14,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     roles = db.relationship("Role", secondary="user_roles")
-    events = db.relationship("Event", backref="user", cascade="all")
 
     def __repr__(self):
         return "{}".format(self.username)
@@ -28,13 +27,10 @@ class User(db.Model, UserMixin):
     def assign_role(self, role):
         self.roles.append(role)
 
-    def assign_event(self, event):
-        self.events.append(event)
-
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class Role(db.Model):
@@ -53,6 +49,34 @@ class UserRoles(db.Model):
     role_id = db.Column(db.Integer(), db.ForeignKey("role.id", ondelete="CASCADE"))
 
 
+class Worker(db.Model, UserMixin):
+    __tablename__ = "worker"
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(120), index=True, unique=True)
+    events = db.relationship("Event", backref="worker", cascade="all")
+    function_id = db.Column(db.Integer, db.ForeignKey("function.id"))
+
+    def __repr__(self):
+        return "{}".format(self.name)
+
+    def assign_event(self, event):
+        self.events.append(event)
+
+
+class Function(db.Model):
+    __tablename__ = "function"
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(120), index=True, unique=True)
+    salary = db.Column(db.Float(), index=True)
+    workers = db.relationship("Worker", backref="function", cascade="all")
+
+    def __repr__(self):
+        return "{}".format(self.name)
+
+    def set_function(self, worker):
+        self.workers.append(worker)
+
+
 class Event(db.Model):
     __tablename__ = "event"
     id = db.Column(db.Integer(), primary_key=True)
@@ -60,11 +84,11 @@ class Event(db.Model):
     end = db.Column(db.DateTime, default=datetime.now())
     delivered = db.Column(db.Boolean, default=False)
     event_kind_id = db.Column(db.Integer, db.ForeignKey("event_kind.id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    worker_id = db.Column(db.Integer, db.ForeignKey("worker.id"))
 
     def __repr__(self):
         return "{}\t{}\t{}\t{}".format(self.event_kind, self.begin, self.end,
-                                       User.query.filter_by(id=self.user_id).first())
+                                       User.query.filter_by(id=self.worker_id).first())
 
 
 class EventKind(db.Model):
