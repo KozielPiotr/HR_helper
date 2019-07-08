@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/auth/login.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username(class="fadeIn first", placeholder="Login") }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password(class="fadeIn second", placeholder="Hasło") }}<br>
+                {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p class="fadeIn third">{{ form.remember_me() }} {{ form.remember_me.label(id="remember") }}</p>
+            <p>{{ form.submit(id="btn-submit", class="fadeIn fourth") }}</p>
+            <br>
+        </form>
+    </div>
+</div>
+{% endblock %}

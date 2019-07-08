@@ -23,6 +23,11 @@ class TestWorker:
         sample_worker.assign_event(sample_event)
         assert sample_event in sample_worker.events
 
+    def test_set_workplace(self, sample_worker, sample_workplace):
+        assert sample_worker not in sample_workplace.workers
+        sample_workplace.set_workplace(sample_worker)
+        assert sample_worker in sample_workplace.workers
+
 
 @pytest.mark.usefixtures("db_session")
 class TestFunction:

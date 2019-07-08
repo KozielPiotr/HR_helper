@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+
+	<head>
+		<title>{{ title }}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+        <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+        {% block head %}{% endblock %}
+        {% block styles %}{% endblock %}
+	</head>
+
+    <body>
+        <nav id="navbar" class="navbar navbar-light">
+            <form class="form-inline">
+                <button class="btn-nav" type="button">
+                    <a class="a-btn" href="#">GŁÓWNA</a>
+                </button>
+                <button  class="btn-nav" type="button">
+                    <a class="a-btn" href="#">LOGOWANIE</a>
+                </button>
+            </form>
+        </nav>
+
+    <!-- flash message -->
+        <div style="text-align: center">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <hr>
+                        {{ message }}
+                        <hr>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <br>
+        </div>
+
+    <!-- MAIN CONTENT -->
+        {% block content %}{% endblock %}
+
+    <!-- FOOT -->
+        <br><br>
+        <footer class="footer">
+            <div class="container">
+                <span>2019 by Piotr Kozieł. All rights reserved. <a href="mailto:koziel.piotr1988@gmail.com">Contact</a></span>
+            </div>
+        </footer>
+    </body>
+</html>

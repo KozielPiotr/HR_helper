@@ -55,6 +55,7 @@ class Worker(db.Model, UserMixin):
     name = db.Column(db.String(120), index=True, unique=True)
     events = db.relationship("Event", backref="worker", cascade="all")
     function_id = db.Column(db.Integer, db.ForeignKey("function.id"))
+    workplace_id = db.Column(db.Integer, db.ForeignKey("workplace.id"))
 
     def __repr__(self):
         return "{}".format(self.name)
@@ -102,3 +103,16 @@ class EventKind(db.Model):
 
     def set_kind(self, event):
         self.events.append(event)
+
+
+class Workplace(db.Model):
+    __tablename__ = "workplace"
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), index=True, unique=True)
+    workers = db.relationship("Worker", backref="workplace", cascade="all")
+
+    def __repr__(self):
+        return "{}".format(self.name)
+
+    def set_workplace(self, worker):
+        self.workers.append(worker)

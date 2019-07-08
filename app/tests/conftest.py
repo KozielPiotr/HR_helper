@@ -1,7 +1,7 @@
 import pytest
 
 from app import db
-from app.models import User, Worker, Function, Role, EventKind, Event
+from app.models import User, Worker, Function, Role, EventKind, Event, Workplace
 from app.tests.utils import create, delete
 
 
@@ -53,3 +53,10 @@ def sample_event():
     e = Event()
     yield create(e)
     delete(e)
+
+
+@pytest.fixture
+def sample_workplace():
+    workplace = Workplace(name="sample_workplace")
+    yield create(workplace)
+    delete(workplace)
