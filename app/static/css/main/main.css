@@ -1,0 +1,59 @@
+.main-container {
+	width: 98%;
+	text-align: center;
+}
+
+.card {
+	display: inline-block;
+	width: 30% !important;
+	background-color: Transparent;
+	background-repeat:no-repeat;
+	border: 4px solid #393939;
+	text-align: center;
+	float: none;
+	margin: 40px 10px 10px 10px;
+	-webkit-transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+	transform: scale(1.1);
+}
+
+.card-header {
+	background-color: #FF5A09;
+}
+
+.list-group-item {
+	background-color: #ec7f37;
+	border-bottom: 2px solid #393939;
+	padding: 10px;
+}
+
+.btn-main-link {
+	background-color: Transparent;
+	background-repeat:no-repeat;
+	border: 3px solid  #393939;
+	border-radius: 8px;
+	font-weight: bold;
+	color:  #393939;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 8px 4px 2px;
+	cursor: pointer;
+	-webkit-transition: all 0.3s ease-in-out;
+}
+
+.btn-main-link:hover {
+	background-color: #393939;
+	color:  #FF5A09;
+	transform: scale(1.1);
+}
+
+.a-btn-main:link, .a-btn-main:visited {
+	color: Inherit;
+	cursor: pointer;
+	text-decoration: none;
+}

@@ -14,11 +14,17 @@
         <nav id="navbar" class="navbar navbar-light">
             <form class="form-inline">
                 <button class="btn-nav" type="button">
-                    <a class="a-btn" href="#">GŁÓWNA</a>
+                    <a class="a-btn" href="{{ url_for('main.index') }}">GŁÓWNA</a>
                 </button>
-                <button  class="btn-nav" type="button">
-                    <a class="a-btn" href="#">LOGOWANIE</a>
-                </button>
+                {% if current_user.is_authenticated %}
+                    <button  class="btn-nav" type="button">
+                        <a class="a-btn" href="{{ url_for('auth.logout') }}">WYLOGUJ {{ current_user }}</a>
+                    </button>
+                {% else %}
+                    <button  class="btn-nav" type="button">
+                        <a class="a-btn" href="#">ZALOGUJ</a>
+                    </button>
+                {% endif %}
             </form>
         </nav>
 
@@ -46,5 +52,8 @@
                 <span>2019 by Piotr Kozieł. All rights reserved. <a href="mailto:koziel.piotr1988@gmail.com">Contact</a></span>
             </div>
         </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
     </body>
 </html>

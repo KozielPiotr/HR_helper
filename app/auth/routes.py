@@ -2,7 +2,7 @@
 
 from flask import redirect, url_for, flash, request
 from flask import render_template
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
 from app.auth import bp
@@ -19,6 +19,8 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))
 
+    title = "HR - logowanie"
+
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -30,4 +32,14 @@ def login():
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("main.index")
         return redirect(next_page)
-    return render_template("auth/login.html", title="Logowanie", form=form)
+    return render_template("auth/login.html", title=title, form=form)
+
+
+@bp.route("/logout", methods=["GET", "POST"])
+def logout():
+    """
+    Logs user out
+    :return: login page
+    """
+    logout_user()
+    return redirect(url_for("auth.login"))
