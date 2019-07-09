@@ -53,6 +53,9 @@ class Worker(db.Model, UserMixin):
     __tablename__ = "worker"
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(120), index=True, unique=True)
+    work_begin = db.Column(db.DateTime(), index=True)
+    work_end = db.Column(db.DateTime(), index=True)
+    contract_end = db.Column(db.DateTime(), index=True)
     events = db.relationship("Event", backref="worker", cascade="all")
     function_id = db.Column(db.Integer, db.ForeignKey("function.id"))
     workplace_id = db.Column(db.Integer, db.ForeignKey("workplace.id"))
@@ -81,8 +84,8 @@ class Function(db.Model):
 class Event(db.Model):
     __tablename__ = "event"
     id = db.Column(db.Integer(), primary_key=True)
-    begin = db.Column(db.DateTime, index=True, nullable=False, default=datetime.now())
-    end = db.Column(db.DateTime, default=datetime.now())
+    begin = db.Column(db.DateTime(), index=True, nullable=False, default=datetime.now())
+    end = db.Column(db.DateTime(), default=datetime.now())
     delivered = db.Column(db.Boolean, default=False)
     event_kind_id = db.Column(db.Integer, db.ForeignKey("event_kind.id"))
     worker_id = db.Column(db.Integer, db.ForeignKey("worker.id"))

@@ -7,7 +7,7 @@ from app.main import bp
 
 
 @bp.route("/index", methods=["GET", "POST"])
-@login_required
+# @login_required
 def index():
     """
     Renders main page
