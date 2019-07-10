@@ -1,4 +1,4 @@
-"""Forms for ser authentication"""
+"""Forms for authentication"""
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
