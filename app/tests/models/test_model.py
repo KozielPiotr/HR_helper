@@ -28,6 +28,11 @@ class TestWorker:
         sample_workplace.set_workplace(sample_worker)
         assert sample_worker in sample_workplace.workers
 
+    def test_assign_start_docs(self, sample_worker, sample_start_docs):
+        assert sample_worker.start_docs != sample_start_docs
+        sample_worker.assign_start_docs(sample_start_docs)
+        assert sample_worker.start_docs == sample_start_docs
+
 
 @pytest.mark.usefixtures("db_session")
 class TestFunction:
