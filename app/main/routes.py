@@ -1,4 +1,4 @@
-"""Routes for user main page"""
+"""Routes for workers main page"""
 
 from flask import render_template
 from flask_login import login_required, current_user
@@ -7,12 +7,13 @@ from app.main import bp
 from app.utils.utilities import required_role
 
 
+@bp.route("/")
 @bp.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
     """
     Renders main page
-    :return: main page if user is logged
+    :return: main page if workers is logged
     """
     required_role(current_user, "user")
 

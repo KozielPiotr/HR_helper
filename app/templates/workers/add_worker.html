@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Nowy pracownik</h1>
+<form action="" method="post" novalidate>
+{{ form.hidden_tag() }}
+{{ form.name.label }}{{ form.name }}{{ form.name.errors }}<br>
+{{ form.contract_begin.label }}{{ form.contract_begin }}{{ form.contract_begin.errors }}<br>
+{{ form.contract_end.label }}{{ form.contract_end }}{{ form.contract_end.errors }}<br>
+{{ form.workplace.label }}{{ form.workplace }}{{ form.workplace.errors }}<br>
+{{ form.function }}<br>
+{{ form.submit() }}
+</form>
+{% endblock %}

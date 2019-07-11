@@ -27,4 +27,7 @@ app.register_blueprint(auth_bp)
 from app.main import bp as main_bp
 app.register_blueprint(main_bp)
 
+from app.workers import bp as workers_bp
+app.register_blueprint(workers_bp)
+
 from app import models

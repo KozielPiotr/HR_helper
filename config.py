@@ -20,15 +20,12 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI", DEFAULT_DB_URI)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    JWT_SECRET_KEY = "jwt-secret-string"
-    JWT_BLACKLIST_ENABLED = True
-    JWT_BLACKLIST_TOKEN_CHECKS = ["access", "refresh"]
-
 
 class Testing(Config):
 
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite://"
+    WTF_CSRF_ENABLED = False
 
 
 class Development(Config):

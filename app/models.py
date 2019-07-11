@@ -53,7 +53,7 @@ class Worker(db.Model, UserMixin):
     __tablename__ = "worker"
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(120), index=True, unique=True)
-    work_begin = db.Column(db.DateTime(), index=True)
+    contract_begin = db.Column(db.DateTime(), index=True)
     work_end = db.Column(db.DateTime(), index=True)
     contract_end = db.Column(db.DateTime(), index=True)
     events = db.relationship("Event", backref="worker", cascade="all")
