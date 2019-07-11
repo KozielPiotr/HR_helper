@@ -1,14 +1,53 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/new-worker.css') }}" rel="stylesheet">
+{% endblock %}
+
+
 {% block content %}
-<h1>Nowy pracownik</h1>
-<form action="" method="post" novalidate>
-{{ form.hidden_tag() }}
-{{ form.name.label }}{{ form.name }}{{ form.name.errors }}<br>
-{{ form.contract_begin.label }}{{ form.contract_begin }}{{ form.contract_begin.errors }}<br>
-{{ form.contract_end.label }}{{ form.contract_end }}{{ form.contract_end.errors }}<br>
-{{ form.workplace.label }}{{ form.workplace }}{{ form.workplace.errors }}<br>
-{{ form.function }}<br>
-{{ form.submit() }}
-</form>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div id="new-worker-header">
+                <h1>Nowy pracownik</h1>
+            </div>
+            <p>
+                {{ form.name.label(class="fadeIn first input-label") }} {{ form.name(class="fadeIn first") }}<br>
+                {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.contract_begin.label(class="fadeIn second input-label") }} {{ form.contract_begin(class="fadeIn second") }}<br>
+                {% for error in form.contract_begin.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.contract_end.label(class="fadeIn third input-label") }} {{ form.contract_end(class="fadeIn third") }}<br>
+                {% for error in form.contract_end.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.workplace.label(class="fadeIn fourth input-label") }} {{ form.workplace(class="fadeIn fourth") }}<br>
+                {% for error in form.workplace.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.function.label(class="fadeIn fifth input-label") }} {{ form.function(class="fadeIn fifth") }}<br>
+                {% for error in form.function.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit(id="btn-submit", class="fadeIn sixth") }}</p>
+            <br>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

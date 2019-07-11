@@ -13,7 +13,10 @@ from app.workers.forms import NewWorkerForm
 @bp.route("/add-workers", methods=["GET", "POST"])
 @login_required
 def add_worker():
-    """Adds new worker to db"""
+    """
+    Adds new worker to db
+    :return: redirects to created worker's start documents or, if worker already exists, gives user info about that fact
+    """
     required_role(current_user, "user")
 
     title = "HR - nowy pracownik"
@@ -23,8 +26,8 @@ def add_worker():
     form.function.choices = [(str(function), str(function)) for function in Function.query.all()]
     if form.validate_on_submit():
         worker = add_worker_utils.add_worker_submit_form(form)
-        if worker:
-            return redirect(url_for("main.index"))
+        if worker[0]:
+            return redirect(url_for("workers.start_docs", worker_id=worker[1]))
         flash("Użytkownik {} już istnieje".format(form.name.data))
 
     return render_template("workers/add_worker.html", title=title, form=form)

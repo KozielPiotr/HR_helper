@@ -25,5 +25,5 @@ def add_worker_submit_form(form):
             workplace.set_workplace(worker)
         db.session.add(worker)
         db.session.commit()
-        return True
-    return False
+        return True, worker.id
+    return False, None
