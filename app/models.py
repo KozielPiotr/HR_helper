@@ -59,7 +59,7 @@ class Worker(db.Model, UserMixin):
     events = db.relationship("Event", backref="worker", cascade="all")
     function_id = db.Column(db.Integer, db.ForeignKey("function.id"))
     workplace_id = db.Column(db.Integer, db.ForeignKey("workplace.id"))
-    start_docs = db.relationship("StartDocSet", uselist=False, backref="worker")
+    start_docs = db.relationship("StartDoc", backref="worker", cascade="all")
 
     def __repr__(self):
         return "{}".format(self.name)
@@ -67,8 +67,8 @@ class Worker(db.Model, UserMixin):
     def assign_event(self, event):
         self.events.append(event)
 
-    def assign_start_docs(self, docs):
-        self.start_docs = docs
+    def assign_start_doc(self, doc):
+        self.start_docs.append(doc)
 
 
 class Function(db.Model):
@@ -95,7 +95,7 @@ class Event(db.Model):
     notes = db.Column(db.String(300), default=False)
     delivered = db.Column(db.Boolean(), default=False)
     sent_to_hr = db.Column(db.Boolean(), default=False)
-    sent_date = db.Column(db.DateTime(), index=True)
+    sent_date = db.Column(db.Date(), index=True)
 
     def __repr__(self):
         return "{}\t{}\t{}\t{}".format(self.event_kind, self.begin, self.end,
@@ -128,19 +128,25 @@ class Workplace(db.Model):
         self.workers.append(worker)
 
 
-class StartDocSet(db.Model):
+class StartDoc(db.Model):
+    __tablename__ = "start_docs"
     id = db.Column(db.Integer(), primary_key=True)
-    contract = db.Column(db.Boolean(), default=False)
-    codex_info = db.Column(db.Boolean(), default=False)
-    responsibility = db.Column(db.Boolean(), default=False)
-    work_statuste = db.Column(db.Boolean(), default=False)
-    account = db.Column(db.Boolean(), default=False)
-    school_certificate = db.Column(db.Boolean(), default=False)
-    cert_of_employment = db.Column(db.Boolean(), default=False)
-    rodo = db.Column(db.Boolean(), default=False)
-    rodo_hr_office = db.Column(db.Boolean(), default=False)
     notes = db.Column(db.String(300), default=False)
     delivered = db.Column(db.Boolean(), default=False)
     sent_to_hr = db.Column(db.Boolean(), default=False)
-    sent_date = db.Column(db.DateTime(), index=True)
-    worker_id = db.Column(db.Integer(), db.ForeignKey('worker.id'))
+    sent_date = db.Column(db.Date(), index=True)
+    start_doc_type = db.Column(db.Integer, db.ForeignKey("start_doc_type.id"))
+    worker_id = db.Column(db.Integer(), db.ForeignKey("worker.id"))
+
+
+class StartDocType(db.Model):
+    __tabname__ = "start_doc_type"
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), index=True, unique=True)
+    docs = db.relationship("StartDoc", backref="doc_type", cascade="all")
+
+    def __repr__(self):
+        return "{}".format(self.name)
+
+    def assign_document(self, document):
+        self.docs.append(document)

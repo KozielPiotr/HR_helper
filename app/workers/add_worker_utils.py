@@ -26,5 +26,4 @@ def add_worker_submit_form(form):
         db.session.add(worker)
         db.session.commit()
         return True
-    else:
-        return False
+    return False

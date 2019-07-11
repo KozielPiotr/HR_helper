@@ -15,7 +15,6 @@ class TestUser:
         assert sample_role in sample_user.roles
 
 
-@pytest.mark.usefixtures("db_session")
 class TestWorker:
 
     def test_assign_event(self, sample_worker, sample_event):
@@ -28,13 +27,12 @@ class TestWorker:
         sample_workplace.set_workplace(sample_worker)
         assert sample_worker in sample_workplace.workers
 
-    def test_assign_start_docs(self, sample_worker, sample_start_docs):
-        assert sample_worker.start_docs != sample_start_docs
-        sample_worker.assign_start_docs(sample_start_docs)
-        assert sample_worker.start_docs == sample_start_docs
+    def test_assign_start_doc(self, sample_worker, sample_start_doc):
+        assert sample_start_doc not in sample_worker.start_docs
+        sample_worker.assign_start_doc(sample_start_doc)
+        assert sample_start_doc in sample_worker.start_docs
 
 
-@pytest.mark.usefixtures("db_session")
 class TestFunction:
 
     def test_set_function(self, sample_worker, sample_function):
@@ -43,10 +41,17 @@ class TestFunction:
         assert sample_function == sample_worker.function
 
 
-@pytest.mark.usefixtures("db_session")
 class TestEvent:
 
     def test_set_event_kind(self, sample_event_kind, sample_event):
         assert sample_event_kind != sample_event.event_kind
         sample_event_kind.set_kind(sample_event)
         assert sample_event.event_kind == sample_event_kind
+
+
+class TestStartDocs:
+
+    def test_assign_document(self, sample_start_doc, sample_start_doc_type):
+        assert sample_start_doc not in sample_start_doc_type.docs
+        sample_start_doc_type.assign_document(sample_start_doc)
+        assert sample_start_doc in sample_start_doc_type.docs

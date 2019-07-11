@@ -25,7 +25,6 @@ def add_worker():
         worker = add_worker_utils.add_worker_submit_form(form)
         if worker:
             return redirect(url_for("main.index"))
-        else:
-            flash("Użytkownik {} już istnieje".format(form.name.data))
+        flash("Użytkownik {} już istnieje".format(form.name.data))
 
     return render_template("workers/add_worker.html", title=title, form=form)
