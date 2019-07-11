@@ -1,0 +1,85 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	min-height: 100%;
+	padding: 20px;
+}
+
+#header, list-footer {
+	border-bottom: 2px solid #FF5A09;
+	color: #FF5A09;
+	padding: 10px;
+}
+
+#list-footer {
+	border-top: 2px solid #FF5A09;
+}
+
+#formContent {
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	border: 2px solid #FF5A09;
+	background: #393939;
+	padding: 30px;
+	width: 90%;
+	max-width: 450px;
+	position: relative;
+	padding: 0px;
+	padding-top: 10px;
+	-webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+	box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+	text-align: center;
+}
+
+.fadeIn {
+	opacity:0;
+	-webkit-animation:fadeIn ease-in 1;
+	-moz-animation:fadeIn ease-in 1;
+	animation:fadeIn ease-in 1;
+
+	-webkit-animation-fill-mode:forwards;
+	-moz-animation-fill-mode:forwards;
+	animation-fill-mode:forwards;
+
+	-webkit-animation-duration:1s;
+	-moz-animation-duration:1s;
+	animation-duration:1s;
+}
+
+.list-group-item {
+	background-color: Transparent;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-highlight {
+	background-color: red !important;
+}
+
+.input-label {
+	color:  #FF5A09;
+}
+
+#btn-submit {
+	background-color: Transparent;
+	background-repeat:no-repeat;
+	border: 3px solid  #FF5A09;
+	border-radius: 8px;
+	font-weight: bold;
+	color:  #FF5A09;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	margin-bottom: 25px;
+}
+
+#btn-submit:hover {
+	background-color: #FF5A09;
+	color:  #393939;
+	transform: scale(1.1);
+}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/select-start-docs.css') }}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/select_start_docs.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <form action="/{{ worker }}/create-start-docs" method="post" novalidate>
+            <div id="header">
+                <h2>Wybierz dokumenty, które musi dostarczyć <span id="worker">{{ worker }}</span></h2>
+            </div>
+            <ul class="list-group">
+                {% for doc in docs %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="custom-control custom-switch doc">
+                        <input type="checkbox" checked class="custom-control-input" id="{{ doc }}" value="{{ doc }}">
+                        <label class="custom-control-label input-label" for="{{ doc }}">{{ doc }}</label>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div id="list-footer">
+                <br>
+                <button id="btn-submit">Dalej</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

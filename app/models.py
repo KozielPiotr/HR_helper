@@ -138,6 +138,10 @@ class StartDoc(db.Model):
     start_doc_type = db.Column(db.Integer, db.ForeignKey("start_doc_type.id"))
     worker_id = db.Column(db.Integer(), db.ForeignKey("worker.id"))
 
+    def __repr__(self):
+        return "{} - {}".format(Worker.query.filter_by(id=self.worker_id).first(),
+                                StartDocType.query.filter_by(id=self.start_doc_type).first())
+
 
 class StartDocType(db.Model):
     __tabname__ = "start_doc_type"
