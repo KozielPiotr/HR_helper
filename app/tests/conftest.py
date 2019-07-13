@@ -71,6 +71,6 @@ def sample_start_doc():
 
 @pytest.fixture
 def sample_start_doc_type():
-    doc = StartDocType()
+    doc = StartDocType(name="sample_doc")
     yield create(doc)
     delete(doc)

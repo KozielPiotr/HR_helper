@@ -60,7 +60,6 @@ def create_start_docs(worker_name):
     """
     data = request.json
     add_worker_utils.create_worker_start_docs(worker_name, data)
-    # TODO tests
     return url_for("workers.worker_start_docs", worker_name=worker_name)
 
 

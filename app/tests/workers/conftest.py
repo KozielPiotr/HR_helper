@@ -15,18 +15,11 @@ def sample_new_worker_form(sample_function, sample_workplace):
     form.function.data = sample_function.name
     form.workplace.data = sample_workplace.name
 
-
     yield form
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="module")
 def context():
     ctx = app.app_context()
-    yield ctx.push()
-    ctx.pop()
-
-@pytest.fixture(scope="function")
-def request_context():
-    ctx = app.request_context()
     yield ctx.push()
     ctx.pop()

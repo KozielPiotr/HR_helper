@@ -33,7 +33,7 @@ def create_worker_start_docs(worker_name, docs):
     """
     Creates db records for chosen documents and assigns them to worker
     :param worker_name: worker's name
-    :param docs: chosen documents
+    :param docs: names of chosen documents (list of strings)
     """
 
     worker = Worker.query.filter_by(name=worker_name).first()
