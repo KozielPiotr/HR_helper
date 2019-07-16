@@ -1,7 +1,9 @@
 """Utilities for 'add_worker' route"""
 
-from app import db
+from flask import url_for
+from datetime import datetime
 
+from app import db
 from app.models import Worker, Function, Workplace, StartDoc, StartDocType
 
 
@@ -10,6 +12,7 @@ def add_worker_submit_form(form):
     Adds new worker to db based on form
     :param form: form for new worker
     """
+
     worker = Worker()
     worker.name = form.name.data
     worker.contract_begin = form.contract_begin.data
@@ -44,3 +47,27 @@ def create_worker_start_docs(worker_name, docs):
         worker.assign_start_doc(new_doc)
         db.session.add_all([worker, new_doc])
     db.session.commit()
+
+
+def upgrade_start_docs_status(data):
+    """
+    Checks if form sent correct data. If it did, then upgrades start document's records.
+    Else returns false, so js at front inform user about mistake
+    :param data: dict from json sent by frontend js script
+    :return: url to main page if data is correct. Else returns False
+    """
+
+    if data:
+        for key in data:
+            doc = StartDoc.query.filter_by(id=key).first()
+            doc.delivered = data[key]["delivered"]
+            doc.sent_to_hr = data[key]["sent"]
+            if data[key]["sent-date"] != "":
+                doc.sent_date = datetime.strptime(data[key]["sent-date"], "%Y-%m-%d")
+            else:
+                doc.sent_date = None
+            doc.notes = data[key]["notes"]
+            db.session.add(doc)
+        db.session.commit()
+        return {"response": url_for("main.index")}
+    return {"response": False}

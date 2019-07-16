@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/worker_list_start_docs.css') }}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/workers/list_start_docs.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div id="formContent">
+        <form action="/start-docs-status-upgrade" method="post" novalidate>
+            <table id="docs-list-table">
+                <thead>
+                    <tr>
+                        <th class="th-left">Dokument</th>
+                        <th>Dostarczony</th>
+                        <th>Przekazany do kadr</th>
+                        <th>Data przekazania do kadr</th>
+                        <th class="th-right">Uwagi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doc in docs %}
+                    <tr id="{{ doc.id }}" class="docs-data">
+                        <td class="td-left">
+                            {{ doc }}
+                        </td>
+                        <td>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" {% if doc.delivered %} checked {% endif %} class="custom-control-input delivered" id="{{ doc }}-delivered" value="{{ doc }}">
+                                <label class="custom-control-label input-label" for="{{ doc }}-delivered"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" {% if doc.sent_to_hr %} checked {% endif %} class="custom-control-input sent" id="{{ doc }}-sent-to-hr" value="{{ doc }}">
+                                <label class="custom-control-label input-label" for="{{ doc }}-sent-to-hr"></label>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="date" id="{{ doc }}-sent-date" class="transp-input sent-date" {% if doc.sent_date != None %} value="{{ doc.sent_date }}" {% endif %}>
+                        </td>
+                        <td class="td-right">
+                            <textarea rows="2" id="{{ doc }}-notes" class="transp-input notes">
+                                {%- if doc.notes != "0" %}{{ doc.notes }}{% endif -%}
+                            </textarea>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <button id="btn-submit">Dalej</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -8,16 +8,6 @@
 	padding: 20px;
 }
 
-#header, list-footer {
-	border-bottom: 2px solid #FF5A09;
-	color: #FF5A09;
-	padding: 10px;
-}
-
-#list-footer {
-	border-top: 2px solid #FF5A09;
-}
-
 #formContent {
 	-webkit-border-radius: 10px 10px 10px 10px;
 	border-radius: 10px 10px 10px 10px;
@@ -25,36 +15,53 @@
 	background: #393939;
 	padding: 30px;
 	width: 90%;
-	max-width: 450px;
+	max-width: 80%;
 	position: relative;
 	padding: 0px;
-	padding-top: 10px;
+	padding-top: 0px;
 	-webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 	box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 	text-align: center;
 }
 
-.fadeIn {
-	opacity:0;
-	-webkit-animation:fadeIn ease-in 1;
-	-moz-animation:fadeIn ease-in 1;
-	animation:fadeIn ease-in 1;
-
-	-webkit-animation-fill-mode:forwards;
-	-moz-animation-fill-mode:forwards;
-	animation-fill-mode:forwards;
-
-	-webkit-animation-duration:1s;
-	-moz-animation-duration:1s;
-	animation-duration:1s;
+#docs-list-table {
+    width: 100%;
 }
 
-.list-group-item {
-	background-color: Transparent;
+.th-left, .td-left {
+    border-left: 0px;
 }
 
-.input-label {
-	color:  #FF5A09;
+.th-right, .td-right {
+    border-right: none;
+}
+
+th, td {
+    border: 1px solid #FF5A09;
+    border-top: 0px;
+    padding: 5px;
+    color: #FF5A09;
+}
+
+th {
+    background-color: #FF5A09;
+    color: #393939;
+    border: 1px solid #393939;
+    border-top: none;
+}
+
+td {
+    color: #FF5A09;
+}
+
+tr {
+    border: none;
+}
+
+.transp-input {
+    background: transparent;
+    border: none;
+    color: #FF5A09;
 }
 
 #btn-submit {

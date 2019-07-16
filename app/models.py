@@ -131,7 +131,7 @@ class Workplace(db.Model):
 class StartDoc(db.Model):
     __tablename__ = "start_docs"
     id = db.Column(db.Integer(), primary_key=True)
-    notes = db.Column(db.String(300), default=False)
+    notes = db.Column(db.String(300))
     delivered = db.Column(db.Boolean(), default=False)
     sent_to_hr = db.Column(db.Boolean(), default=False)
     sent_date = db.Column(db.Date(), index=True)
@@ -139,8 +139,7 @@ class StartDoc(db.Model):
     worker_id = db.Column(db.Integer(), db.ForeignKey("worker.id"))
 
     def __repr__(self):
-        return "{} - {}".format(Worker.query.filter_by(id=self.worker_id).first(),
-                                StartDocType.query.filter_by(id=self.start_doc_type).first())
+        return "{}".format(StartDocType.query.filter_by(id=self.start_doc_type).first())
 
 
 class StartDocType(db.Model):

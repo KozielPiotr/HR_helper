@@ -3,11 +3,11 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
-from app.utils.utilities import required_role
 from app.models import Workplace, Function, Worker, StartDocType
 from app.workers import bp
-from app.workers import add_worker_utils
 from app.workers.forms import NewWorkerForm
+from app.utils.utilities import required_role
+from app.workers import add_worker_utils
 
 
 @bp.route("/add-workers", methods=["GET", "POST"])
@@ -58,6 +58,9 @@ def create_start_docs(worker_name):
     :param worker_name: worker's name
     :return: url for worker_start_docs
     """
+
+    required_role(current_user, "user")
+
     data = request.json
     add_worker_utils.create_worker_start_docs(worker_name, data)
     return url_for("workers.worker_start_docs", worker_name=worker_name)
@@ -68,9 +71,29 @@ def create_start_docs(worker_name):
 def worker_start_docs():
     """
     Here user can check if worker delivered all documents needed for hire
-    :return:
+    :return: index page if everything is OK
     """
+
+    required_role(current_user, "user")
+
     worker_name = request.args.get("worker_name")
     worker = Worker.query.filter_by(name=worker_name).first()
-    # TODO frontend with possibility to change doc's columns vals
-    return "Lista dokumentów do zatrudnienia: \n{}".format(worker.start_docs)
+    return render_template("workers/worker_list_start_docs.html", docs=worker.start_docs)
+
+
+@bp.route("/start-docs-status-upgrade", methods=["GET", "POST"])
+@login_required
+def start_docs_status_upgrade():
+    """
+    Checks if data delivered by front is correct and upgrades start documents records
+    :return: url to main page if data is correct. Else returns False
+    """
+
+    required_role(current_user, "user")
+
+    data = request.json
+    response = add_worker_utils.upgrade_start_docs_status(data)
+
+    return response
+
+# TODO tests for "start_docs_status_upgrade"
