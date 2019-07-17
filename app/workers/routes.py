@@ -98,5 +98,3 @@ def start_docs_status_upgrade():
         return {"response": url_for("main.index")}
 
     return {"response": False}
-
-# TODO tests for "start_docs_status_upgrade"

@@ -1,7 +1,6 @@
 """Utilities for 'add_worker' route"""
 
 from datetime import datetime
-from flask import url_for
 
 from app import db
 from app.models import Worker, Function, Workplace, StartDoc, StartDocType
