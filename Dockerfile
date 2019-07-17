@@ -10,9 +10,6 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-
   && pip install -r requirements.txt \
   && apk del build-dependencies
 
-ENV http_proxy host:5000
-ENV https_proxy host:5000
-
 EXPOSE 5000
 
 CMD python manage.py runserver -h 0.0.0.0
