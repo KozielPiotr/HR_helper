@@ -94,6 +94,9 @@ def start_docs_status_upgrade():
     data = request.json
     response = add_worker_utils.upgrade_start_docs_status(data)
 
-    return response
+    if response:
+        return {"response": url_for("main.index")}
+
+    return {"response": False}
 
 # TODO tests for "start_docs_status_upgrade"

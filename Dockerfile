@@ -15,4 +15,4 @@ ENV https_proxy host:5000
 
 EXPOSE 5000
 
-CMD python manage.py runserver
+CMD python manage.py runserver -h 0.0.0.0

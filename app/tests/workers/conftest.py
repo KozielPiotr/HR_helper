@@ -23,3 +23,31 @@ def context():
     ctx = app.app_context()
     yield ctx.push()
     ctx.pop()
+
+
+@pytest.fixture
+def sample_start_doc_data():
+    data = {
+        1: {
+            "delivered": True,
+            "sent": True,
+            "sent-date": "2019-07-25",
+            "notes": "sample note"
+        }
+
+    }
+    yield data
+
+
+@pytest.fixture
+def sample_start_doc_data_wo_date():
+    data = {
+        1: {
+            "delivered": True,
+            "sent": True,
+            "sent-date": "",
+            "notes": "sample note"
+        }
+
+    }
+    yield data

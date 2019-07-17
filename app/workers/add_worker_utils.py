@@ -69,5 +69,5 @@ def upgrade_start_docs_status(data):
             doc.notes = data[key]["notes"]
             db.session.add(doc)
         db.session.commit()
-        return {"response": url_for("main.index")}
-    return {"response": False}
+        return True
+    return False

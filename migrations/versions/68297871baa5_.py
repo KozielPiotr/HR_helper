@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d33e199fbf1a
+Revision ID: 68297871baa5
 Revises: 
-Create Date: 2019-07-16 23:03:39.893633
+Create Date: 2019-07-17 21:24:07.787847
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd33e199fbf1a'
+revision = '68297871baa5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -110,15 +110,6 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_start_docs_sent_date'), 'start_docs', ['sent_date'], unique=False)
-
-    op.execute('INSERT INTO "user" VALUES (1, "admin", "pbkdf2:sha256:50000$Fv8pGxVC$f13556c64ea24875a6a550a827d1e769d332bd58a4d996c561af581727ca333f");')
-    op.execute('INSERT INTO "role" VALUES (1, "admin");')
-    op.execute('INSERT INTO "role" VALUES (2, "user");')
-    op.execute('INSERT INTO "user_roles" VALUES (1, 1, 1);')
-    op.execute('INSERT INTO "user_roles" VALUES (2, 1, 2);')
-    op.execute('INSERT INTO "function" VALUES (1, "pracownik", 2000);')
-    op.execute('INSERT INTO "workplace" VALUES (1, "dept_1");')
-    op.execute('INSERT INTO "worker" VALUES (1, "Pracownik 1", "2019-27-01 00:00:00.000000", NULL, "2019-27-04 00:00:00.000000", 1, 1);')
     # ### end Alembic commands ###
 
 
