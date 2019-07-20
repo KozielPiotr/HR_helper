@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 
 from app.models import Workplace, Function, Worker, StartDocType
 from app.workers import bp
-from app.workers.forms import NewWorkerForm
+from app.workers.forms import NewWorkerForm, NewStartDocForm
 from app.utils.utilities import required_role
 from app.workers import add_worker_utils
 
@@ -46,8 +46,9 @@ def start_docs_required(worker_id):
     worker = Worker.query.filter_by(id=worker_id).first()
     documents = StartDocType.query.order_by(StartDocType.id).all()
 
-    return render_template("workers/worker_select_start_docs.html", title="HR - wybór dokumentów do zatrudnienia",
-                           docs=documents, worker=worker)
+    title = "HR - wybór dokumentów do zatrudnienia"
+
+    return render_template("workers/worker_select_start_docs.html", title=title, docs=documents, worker=worker)
 
 
 @bp.route("/<worker_name>/create-start-docs", methods=["GET", "POST"])
@@ -63,6 +64,7 @@ def create_start_docs(worker_name):
 
     data = request.json
     add_worker_utils.create_worker_start_docs(worker_name, data)
+
     return url_for("workers.worker_start_docs", worker_name=worker_name)
 
 
@@ -78,7 +80,19 @@ def worker_start_docs():
 
     worker_name = request.args.get("worker_name")
     worker = Worker.query.filter_by(name=worker_name).first()
-    return render_template("workers/worker_list_start_docs.html", docs=worker.start_docs)
+
+    title = "HR dokumenty główne: {}".format(worker.name)
+
+    form = NewStartDocForm()
+    form.doc_type.choices = [(str(doc_type), str(doc_type)) for doc_type in StartDocType.query.all()]
+
+    if form.validate_on_submit():
+        doc = form.doc_type.data
+        add_worker_utils.create_worker_start_docs(worker_name, [doc])
+        return redirect(url_for("workers.worker_start_docs", worker_name=worker_name))
+
+    return render_template("workers/worker_list_start_docs.html", title=title, docs=worker.start_docs, worker=worker,
+                           form=form)
 
 
 @bp.route("/start-docs-status-upgrade", methods=["GET", "POST"])

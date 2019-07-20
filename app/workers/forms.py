@@ -16,3 +16,10 @@ class NewWorkerForm(FlaskForm):
     function = SelectField("Stanowisko")
     workplace = SelectField("Dział")
     submit = SubmitField("Wprowadź")
+
+
+class NewStartDocForm(FlaskForm):
+    """Form for new start document for worker"""
+
+    doc_type = SelectField("Typ dokumentu")
+    submit = SubmitField("Dodaj")

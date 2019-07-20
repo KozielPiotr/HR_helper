@@ -92,7 +92,7 @@ class Event(db.Model):
     end = db.Column(db.DateTime(), default=datetime.now())
     event_kind_id = db.Column(db.Integer(), db.ForeignKey("event_kind.id"))
     worker_id = db.Column(db.Integer(), db.ForeignKey("worker.id"))
-    notes = db.Column(db.String(300), default=False)
+    notes = db.Column(db.String(300), default="")
     delivered = db.Column(db.Boolean(), default=False)
     sent_to_hr = db.Column(db.Boolean(), default=False)
     sent_date = db.Column(db.Date(), index=True)
@@ -131,7 +131,7 @@ class Workplace(db.Model):
 class StartDoc(db.Model):
     __tablename__ = "start_docs"
     id = db.Column(db.Integer(), primary_key=True)
-    notes = db.Column(db.String(300))
+    notes = db.Column(db.String(300), default="")
     delivered = db.Column(db.Boolean(), default=False)
     sent_to_hr = db.Column(db.Boolean(), default=False)
     sent_date = db.Column(db.Date(), index=True)

@@ -27,7 +27,7 @@ function chosenDocs() {
 }
 
 $(document).ready(function() {
-    $("form").submit(function(e){
+    $("#change-start-docs-status").submit(function(e){
         let form = $(this);
         $.ajax({
             url   : form.attr("action"),

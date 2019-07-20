@@ -8,8 +8,8 @@
 
 {% block content %}
 <div class="wrapper">
-    <div id="formContent">
-        <form action="/start-docs-status-upgrade" method="post" novalidate>
+    <div class="formContent">
+        <form id="change-start-docs-status" action="/start-docs-status-upgrade" method="post" novalidate>
             <table id="docs-list-table">
                 <thead>
                     <tr>
@@ -43,7 +43,7 @@
                         </td>
                         <td class="td-right">
                             <textarea rows="2" id="{{ doc }}-notes" class="transp-input notes">
-                                {%- if doc.notes != "0" %}{{ doc.notes }}{% endif -%}
+                                {%- if doc.notes != "0" or doc.notes != "None" %}{{ doc.notes }}{% endif -%}
                             </textarea>
                         </td>
                     </tr>
@@ -52,11 +52,21 @@
                 <tfoot>
                     <tr>
                         <td colspan="5">
-                            <button id="btn-submit">Dalej</button>
+                            <button id="submit-doc-changes" class="btn-submit">Aktualizuj</button>
                         </td>
                     </tr>
                 </tfoot>
             </table>
+        </form>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="formContent">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.doc_type(id="doc_type", class="transp-input") }}<br>
+            {{ form.submit(id="submit-doc-changes", class="btn-submit") }}
         </form>
     </div>
 </div>
