@@ -56,6 +56,7 @@ class Worker(db.Model, UserMixin):
     contract_begin = db.Column(db.DateTime(), index=True)
     work_end = db.Column(db.DateTime(), index=True)
     contract_end = db.Column(db.DateTime(), index=True)
+    working = db.Column(db.Boolean(), default=True)
     events = db.relationship("Event", backref="worker", cascade="all")
     function_id = db.Column(db.Integer, db.ForeignKey("function.id"))
     workplace_id = db.Column(db.Integer, db.ForeignKey("workplace.id"))

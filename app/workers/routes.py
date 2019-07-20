@@ -112,3 +112,12 @@ def start_docs_status_upgrade():
         return {"response": url_for("main.index")}
 
     return {"response": False}
+
+
+@bp.route("/workers-list-form", methods=["GET", "POST"])
+def workers_list():
+    """
+    Allows to filter workers which user wants to find
+    :return: list of workers meeting requirements
+    """
+    # TODO form for list
