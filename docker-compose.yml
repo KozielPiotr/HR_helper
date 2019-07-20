@@ -1,0 +1,35 @@
+version: "2"
+
+services: 
+    db:
+        image: library/postgres:11.1-alpine
+        networks:
+            - hr-helper-net
+        ports:
+            - 5432:5432
+        volumes:
+            - hr-helper-db:/var/lib/postgresql
+        environment:
+             - POSTGRES_USER=hr
+             - POSTGRES_PASSWORD=helper
+             - POSTGRES_DB=hrdb
+
+    web:
+        depends_on:
+            - db
+        environment:
+            - DATABASE_URL=postgres://hr:helper@db/hrdb
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        networks:
+            - hr-helper-net
+        ports:
+            - 5000:5000
+
+networks:
+    hr-helper-net:
+        driver: bridge
+
+volumes:
+     hr-helper-db:
