@@ -70,3 +70,21 @@ def upgrade_start_docs_status(data):
         db.session.commit()
         return True
     return False
+
+
+def query_workers(form):
+    """
+    Makes list of workers meeting criteria
+    :param form: search criteria
+    :return: list of Worker objects
+    """
+
+    crit = {}
+    if form.name.data != "":
+        crit["name"] = form.name.data
+    crit["working"] = form.works.data
+    crit["workplace"] = Workplace.query.filter_by(name=form.workplace.data).first()
+    crit["function"] = Function.query.filter_by(name=form.function.data).first()
+    workers = Worker.query.filter_by(**crit).all()
+
+    return workers

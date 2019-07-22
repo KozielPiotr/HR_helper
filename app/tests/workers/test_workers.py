@@ -2,7 +2,8 @@ import pytest
 from datetime import datetime
 
 from app.models import Worker
-from app.workers.add_worker_utils import add_worker_submit_form, create_worker_start_docs, upgrade_start_docs_status
+from app.workers.workers_utils import add_worker_submit_form, create_worker_start_docs, upgrade_start_docs_status, \
+    query_workers
 
 
 @pytest.mark.usefixtures("db_session", "context")
@@ -56,3 +57,14 @@ def test_upgrade_start_docs_status(sample_start_doc, sample_start_doc_data, samp
     assert sample_start_doc.sent_date is None
 
     assert not upgrade_start_docs_status(False)
+
+
+def test_query_workers(sample_worker, sample_worker_query_form, sample_function, sample_workplace):
+    sample_function.set_function(sample_worker)
+    sample_workplace.set_workplace(sample_worker)
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+
+    sample_worker_query_form.works.data = False
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker not in workers

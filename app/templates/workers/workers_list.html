@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/workers-list.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div class="formContent">
+        <table id="docs-list-table">
+            <thead>
+                <tr>
+                    <th class="th-left">Pracownik</th>
+                    <th>Funkcja</th>
+                    <th>Dział</th>
+                    <th class="th-right">Pracuje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for worker in workers %}
+                <tr>
+                    <td class="td-left">
+                        {{ worker.name }}
+                    </td>
+                    <td>
+                        {{ worker.function }}
+                    </td>
+                    <td>
+                        {{ worker.workplace }}
+                    </td>
+                    <td class="td-right">
+                        {% if worker.working %} TAK
+                        {% else %} NIE {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

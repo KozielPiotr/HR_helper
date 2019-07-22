@@ -5,9 +5,9 @@ from flask_login import login_required, current_user
 
 from app.models import Workplace, Function, Worker, StartDocType
 from app.workers import bp
-from app.workers.forms import NewWorkerForm, NewStartDocForm
+from app.workers.forms import NewWorkerForm, NewStartDocForm, FilterWorkersForm
 from app.utils.utilities import required_role
-from app.workers import add_worker_utils
+from app.workers import workers_utils
 
 
 @bp.route("/add-workers", methods=["GET", "POST"])
@@ -25,7 +25,7 @@ def add_worker():
     form.workplace.choices = [(str(worker), str(worker)) for worker in Workplace.query.all()]
     form.function.choices = [(str(function), str(function)) for function in Function.query.all()]
     if form.validate_on_submit():
-        worker = add_worker_utils.add_worker_submit_form(form)
+        worker = workers_utils.add_worker_submit_form(form)
         if worker[0]:
             return redirect(url_for("workers.start_docs_required", worker_id=worker[1]))
         flash("Użytkownik {} już istnieje".format(form.name.data))
@@ -63,7 +63,7 @@ def create_start_docs(worker_name):
     required_role(current_user, "user")
 
     data = request.json
-    add_worker_utils.create_worker_start_docs(worker_name, data)
+    workers_utils.create_worker_start_docs(worker_name, data)
 
     return url_for("workers.worker_start_docs", worker_name=worker_name)
 
@@ -88,7 +88,7 @@ def worker_start_docs():
 
     if form.validate_on_submit():
         doc = form.doc_type.data
-        add_worker_utils.create_worker_start_docs(worker_name, [doc])
+        workers_utils.create_worker_start_docs(worker_name, [doc])
         return redirect(url_for("workers.worker_start_docs", worker_name=worker_name))
 
     return render_template("workers/worker_list_start_docs.html", title=title, docs=worker.start_docs, worker=worker,
@@ -106,7 +106,7 @@ def start_docs_status_upgrade():
     required_role(current_user, "user")
 
     data = request.json
-    response = add_worker_utils.upgrade_start_docs_status(data)
+    response = workers_utils.upgrade_start_docs_status(data)
 
     if response:
         return {"response": url_for("main.index")}
@@ -114,10 +114,20 @@ def start_docs_status_upgrade():
     return {"response": False}
 
 
-@bp.route("/workers-list-form", methods=["GET", "POST"])
-def workers_list():
+@bp.route("/workers-query", methods=["GET", "POST"])
+def workers_query():
     """
     Allows to filter workers which user wants to find
     :return: list of workers meeting requirements
     """
-    # TODO form for list
+
+    title = "HR wyszukaj pracownika"
+
+    form = FilterWorkersForm()
+    form.workplace.choices = [(str(workplace), str(workplace)) for workplace in Workplace.query.all()]
+    form.function.choices = [(str(function), str(function)) for function in Function.query.all()]
+    if form.validate_on_submit():
+        workers = workers_utils.query_workers(form)
+        return render_template("workers/workers_list.html", workers=workers)
+
+    return render_template("workers/workers_query.html", title=title, form=form)

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/workers-query.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div id="formContent">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.name(placeholder="Imię i nazwisko") }}<br>
+                {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                <div class="row">
+                    <div class="col">
+                        {{ form.works.label() }}
+                    </div>
+                    <div class="col">
+                        {{ form.works() }}<br>
+                        {% for error in form.works.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="row">
+                    <div class="col">
+                        {{ form.workplace.label() }}
+                    </div>
+                    <div class="col">
+                        {{ form.workplace() }}<br>
+                        {% for error in form.workplace.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </p>
+            <p>
+                <div class="row">
+                    <div class="col">
+                        {{ form.function.label() }}
+                    </div>
+                    <div class="col">
+                        {{ form.function() }}<br>
+                        {% for error in form.function.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </p>
+            <hr>
+            <p>{{ form.submit(id="btn-submit") }}</p>
+            <br>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

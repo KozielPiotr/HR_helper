@@ -2,7 +2,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional, InputRequired
 
 
 class NewWorkerForm(FlaskForm):
@@ -23,3 +23,14 @@ class NewStartDocForm(FlaskForm):
 
     doc_type = SelectField("Typ dokumentu")
     submit = SubmitField("Dodaj")
+
+
+class FilterWorkersForm(FlaskForm):
+    """Fields to filter workers"""
+
+    name = StringField("Imię i nazwisko", validators=[Optional()])
+    works = SelectField("Pracuje", choices=[(True, "TAK"), (False, "NIE")], validators=[InputRequired()],
+                        coerce=lambda x: x == 'True')
+    workplace = SelectField("Dział")
+    function = SelectField("Funkcja")
+    submit = SubmitField("Szukaj")
