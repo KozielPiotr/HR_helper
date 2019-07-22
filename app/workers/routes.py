@@ -121,6 +121,8 @@ def workers_query():
     :return: list of workers meeting requirements
     """
 
+    required_role(current_user, "user")
+
     title = "HR wyszukaj pracownika"
 
     form = FilterWorkersForm()
