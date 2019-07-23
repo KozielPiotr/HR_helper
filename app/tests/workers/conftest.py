@@ -10,8 +10,8 @@ from app.workers.forms import NewWorkerForm, FilterWorkersForm
 def sample_new_worker_form(sample_function, sample_workplace):
     form = NewWorkerForm()
     form.name.data = "test_worker"
-    form.contract_begin.data = datetime(2019, 1, 1, 0, 0)
-    form.contract_end.data = datetime(2019, 1, 1, 0, 0)
+    form.contract_begin.data = datetime(2019, 1, 1, 0, 0).date()
+    form.contract_end.data = datetime(2019, 1, 1, 0, 0).date()
     form.function.data = sample_function.name
     form.workplace.data = sample_workplace.name
 
@@ -59,6 +59,6 @@ def sample_worker_query_form(sample_function, sample_workplace, sample_worker):
     form.name.data = sample_worker.name
     form.workplace.data = sample_workplace.name
     form.function.data = sample_function.name
-    form.works.data = True
+    form.works.data = "True"
 
     yield form

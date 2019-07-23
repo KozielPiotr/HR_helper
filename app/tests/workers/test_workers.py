@@ -65,6 +65,8 @@ def test_query_workers(sample_worker, sample_worker_query_form, sample_function,
     workers = query_workers(sample_worker_query_form)
     assert sample_worker in workers
 
-    sample_worker_query_form.works.data = False
+    sample_worker_query_form.works.data = "False"
     workers = query_workers(sample_worker_query_form)
     assert sample_worker not in workers
+
+    # TODO tests for "all' queries

@@ -82,9 +82,64 @@ def query_workers(form):
     crit = {}
     if form.name.data != "":
         crit["name"] = form.name.data
-    crit["working"] = form.works.data
-    crit["workplace"] = Workplace.query.filter_by(name=form.workplace.data).first()
-    crit["function"] = Function.query.filter_by(name=form.function.data).first()
-    workers = Worker.query.filter_by(**crit).all()
+
+    if form.works.data == "False":
+        crit["working"] = False
+    elif form.works.data == "True":
+        crit["working"] = True
+    else:
+        pass
+
+    if form.workplace.data != "all":
+        crit["workplace"] = Workplace.query.filter_by(name=form.workplace.data).first()
+
+    if form.function.data != "all":
+        crit["function"] = Function.query.filter_by(name=form.function.data).first()
+
+    print(crit)
+
+    if crit:
+        workers = Worker.query.filter_by(**crit).all()
+    else:
+        workers = Worker.query.all()
 
     return workers
+
+
+def edit_worker_basic_info(data):
+    """
+    Upgrades workers basic data
+    :param data: dict with data
+    :return: True if everything goes right way. Otherwise false
+    """
+
+    worker = Worker.query.filter_by(id=data["worker_id"]).first()
+    worker.name = data["name"]
+    worker.workplace_id = data["workplace_id"]
+    worker.function_id = data["function_id"]
+    if data["contract_begin"] != "":
+        worker.contract_begin = datetime.strptime(data["contract_begin"], "%Y-%m-%d")
+    else:
+        worker.contract_begin = None
+
+    if data["contract_end"] != "":
+        worker.contract_end = datetime.strptime(data["contract_end"], "%Y-%m-%d")
+    else:
+        worker.contract_end = None
+
+    if data["works"] == "True":
+        worker.working = True
+    elif data["works"] == "False":
+        worker.working = False
+    else:
+        pass
+
+    if data["work_end"] != "":
+        worker.work_end = datetime.strptime(data["work_end"], "%Y-%m-%d")
+    else:
+        worker.work_end = None
+
+    db.session.add(worker)
+    db.session.commit()
+
+    #TODO tests

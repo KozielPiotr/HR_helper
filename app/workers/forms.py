@@ -2,7 +2,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectField, SubmitField
-from wtforms.validators import DataRequired, Optional, InputRequired
+from wtforms.validators import DataRequired, Optional
 
 
 class NewWorkerForm(FlaskForm):
@@ -29,8 +29,7 @@ class FilterWorkersForm(FlaskForm):
     """Fields to filter workers"""
 
     name = StringField("Imię i nazwisko", validators=[Optional()])
-    works = SelectField("Pracuje", choices=[(True, "TAK"), (False, "NIE")], validators=[InputRequired()],
-                        coerce=lambda x: x == 'True')
+    works = SelectField("Pracuje", choices=[("True", "TAK"), ("False", "NIE"), ("all", "wszyscy")])
     workplace = SelectField("Dział")
     function = SelectField("Funkcja")
     submit = SubmitField("Szukaj")

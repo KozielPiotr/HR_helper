@@ -115,6 +115,7 @@ def start_docs_status_upgrade():
 
 
 @bp.route("/workers-query", methods=["GET", "POST"])
+@login_required
 def workers_query():
     """
     Allows to filter workers which user wants to find
@@ -127,9 +128,50 @@ def workers_query():
 
     form = FilterWorkersForm()
     form.workplace.choices = [(str(workplace), str(workplace)) for workplace in Workplace.query.all()]
+    form.workplace.choices.append(("all", "wszystkie"))
     form.function.choices = [(str(function), str(function)) for function in Function.query.all()]
+    form.function.choices.append(("all", "wszystkie"))
     if form.validate_on_submit():
         workers = workers_utils.query_workers(form)
         return render_template("workers/workers_list.html", workers=workers)
 
     return render_template("workers/workers_query.html", title=title, form=form)
+
+
+@bp.route("/show-worker/<worker_id>", methods=["GET", "POST"])
+@login_required
+def show_worker(worker_id):
+    """
+    Shows important worker's info and allows to edit it
+    :return: template with worker's info
+    """
+
+    required_role(current_user, "user")
+
+    worker = Worker.query.filter_by(id=int(worker_id)).first()
+    workplaces = Workplace.query.all()
+    functions = Function.query.all()
+
+    title = "HR dane pracownika {}".format(worker.name)
+
+    return render_template("workers/show_worker.html", title=title, worker=worker, workplaces=workplaces,
+                           functions=functions)
+
+
+@bp.route("/edit-worker-basic", methods=["GET", "POST"])
+@login_required
+def edit_worker_basic():
+    """
+    Gets json with new workers data and updates records in database
+    :return: url for show_worker view
+    """
+
+    required_role(current_user, "user")
+
+    data = request.json
+    if not data["OK"]:
+        return {"response": False}
+
+    workers_utils.edit_worker_basic_info(data)
+
+    return {"response": url_for("workers.show_worker", worker_id=data["worker_id"])}

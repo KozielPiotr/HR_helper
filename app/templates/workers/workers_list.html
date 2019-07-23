@@ -21,7 +21,7 @@
                 {% for worker in workers %}
                 <tr>
                     <td class="td-left">
-                        {{ worker.name }}
+                        <a href="{{ url_for('workers.show_worker', worker_id=worker.id) }}">{{ worker.name }}</a>
                     </td>
                     <td>
                         {{ worker.function }}

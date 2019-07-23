@@ -63,3 +63,11 @@ tr {
     border: none;
     color: #FF5A09;
 }
+
+a {
+	color: #FF5A09;
+}
+
+a:hover {
+	color: #ec7f37;
+}

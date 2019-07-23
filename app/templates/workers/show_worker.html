@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/show-worker.css') }}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/workers/edit_worker.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<input id="worker-id" type="hidden" value="{{ worker.id }}">
+<div class="top-container">
+    <div class="wrapper">
+        <form id="change-basic" class="content" action="/edit-worker-basic" method="post" novalidate>
+            <div class="header">
+                Podstawowe informacje
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Nazwisko i imię:
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="name" class="data" value="{{ worker.name }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Dział:
+                    </div>
+                </div>
+                <div class="col">
+                    <select id="workplace" class="data">
+                        {% for workplace in workplaces %}
+                            <option value="{{ workplace.id }}" {% if worker.workplace_id==workplace.id %} selected="checked" {% endif %}>{{ workplace.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Funkcja:
+                    </div>
+                </div>
+                <div class="col">
+                    <select id="function" class="data">
+                        {% for function in functions %}
+                            <option value="{{ function.id }}" {% if worker.function_id==function.id %} selected="checked" {% endif %}>{{ function.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Zatrudniony:
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="contract-begin" type="date" class="data" value="{{ worker.contract_begin }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Koniec obecnej umowy:
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="contract-end" type="date" class="data" value="{{ worker.contract_end }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Nadal pracuje:
+                    </div>
+                </div>
+                <div class="col">
+                    <select id="still-works" class="data">
+                        <option value="True" {% if worker.working==True %} selected="selected"{% endif %}>TAK</option>
+                        <option value="False" {% if worker.working==False %} selected="selected"{% endif %}>NIE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Zakończył pracę:
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="work-end" type="date" class="data" {% if worker.work_end != None %} value="{{ worker.work_end }}" {% endif %}>
+                </div>
+            </div>
+            <hr>
+            <div class="data-footer">
+                <button id="basic-submit" class="btn-submit">Zapisz zmiany</button>
+            </div>
+        </form>
+    </div>
+    <div class="wrapper">
+        <div class="content">
+            <div class="header">
+                Placeholder
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Placeholder
+                    </div>
+                </div>
+                <div class="col">
+                    Placeholder
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Placeholder
+                    </div>
+                </div>
+                <div class="col">
+                    Placeholder
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Placeholder
+                    </div>
+                </div>
+                <div class="col">
+                    Placeholder
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="data">
+                        Placeholder
+                    </div>
+                </div>
+                <div class="col">
+                    Placeholder
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
