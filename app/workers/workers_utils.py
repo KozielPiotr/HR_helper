@@ -96,8 +96,6 @@ def query_workers(form):
     if form.function.data != "all":
         crit["function"] = Function.query.filter_by(name=form.function.data).first()
 
-    print(crit)
-
     if crit:
         workers = Worker.query.filter_by(**crit).all()
     else:
@@ -142,4 +140,4 @@ def edit_worker_basic_info(data):
     db.session.add(worker)
     db.session.commit()
 
-    #TODO tests
+    # TODO tests

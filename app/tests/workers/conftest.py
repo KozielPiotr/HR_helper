@@ -54,11 +54,11 @@ def sample_start_doc_data_wo_date():
 
 
 @pytest.fixture
-def sample_worker_query_form(sample_function, sample_workplace, sample_worker):
+def sample_worker_query_form():
     form = FilterWorkersForm()
-    form.name.data = sample_worker.name
-    form.workplace.data = sample_workplace.name
-    form.function.data = sample_function.name
-    form.works.data = "True"
+    form.name.data = ""
+    form.workplace.data = None
+    form.function.data = None
+    form.works.data = ""
 
     yield form

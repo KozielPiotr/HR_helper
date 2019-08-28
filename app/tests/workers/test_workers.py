@@ -21,7 +21,7 @@ def test_add_worker_submit_form(sample_new_worker_form, sample_function, sample_
     assert worker.function_id == sample_function.id
     assert worker.workplace_id == sample_workplace.id
 
-    assert len (Worker.query.filter_by(name=worker_name).all()) == 1
+    assert len(Worker.query.filter_by(name=worker_name).all()) == 1
     add_worker_submit_form(sample_new_worker_form)
     assert len(Worker.query.filter_by(name=worker_name).all()) == 1
 
@@ -59,14 +59,70 @@ def test_upgrade_start_docs_status(sample_start_doc, sample_start_doc_data, samp
     assert not upgrade_start_docs_status(False)
 
 
-def test_query_workers(sample_worker, sample_worker_query_form, sample_function, sample_workplace):
-    sample_function.set_function(sample_worker)
+def test_query_workers_works_field(sample_worker, sample_worker_query_form):
+    sample_worker_query_form.works.data = "False"
+    sample_worker.working = False
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+    sample_worker.working = True
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker not in workers
+
+    sample_worker_query_form.works.data = "True"
+    sample_worker.working = True
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+    sample_worker.working = False
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker not in workers
+
+    sample_worker_query_form.works.data = "all"
+    sample_worker.working = True
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+    sample_worker.working = False
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+
+
+def test_query_workers_name_field(sample_worker, sample_worker_query_form):
+    sample_worker_query_form.name.data = sample_worker.name
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+
+    sample_worker_query_form.name.data = "wrong name"
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker not in workers
+
+
+def test_query_workers_workplace_field(sample_worker, sample_worker_query_form, sample_workplace):
+    sample_worker_query_form.workplace.data = sample_workplace.name
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker not in workers
+
     sample_workplace.set_workplace(sample_worker)
     workers = query_workers(sample_worker_query_form)
     assert sample_worker in workers
 
-    sample_worker_query_form.works.data = "False"
+    sample_worker_query_form.workplace.data = "all"
+    sample_workplace.workers.remove(sample_worker)
+    assert sample_worker.workplace != sample_workplace
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+
+
+def test_query_workers_function_field(sample_worker, sample_worker_query_form, sample_function):
+    sample_worker_query_form.function.data = sample_function.name
     workers = query_workers(sample_worker_query_form)
     assert sample_worker not in workers
 
-    # TODO tests for "all' queries
+    sample_function.set_function(sample_worker)
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+
+    sample_worker_query_form.function.data = "all"
+    sample_function.workers.remove(sample_worker)
+    assert sample_worker.function != sample_function
+    workers = query_workers(sample_worker_query_form)
+    assert sample_worker in workers
+

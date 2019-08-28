@@ -143,6 +143,7 @@ def workers_query():
 def show_worker(worker_id):
     """
     Shows important worker's info and allows to edit it
+    :param worker_id: id of chosen worker
     :return: template with worker's info
     """
 
@@ -162,7 +163,8 @@ def show_worker(worker_id):
 @login_required
 def edit_worker_basic():
     """
-    Gets json with new workers data and updates records in database
+    Gets json with new workers data and updates records in database.
+    Used by app/static/js/workers/edit_worker.js in app/templates/workers/show_worker.html
     :return: url for show_worker view
     """
 
