@@ -29,7 +29,7 @@ class FilterWorkersForm(FlaskForm):
     """Fields to filter workers"""
 
     name = StringField("Imię i nazwisko", validators=[Optional()])
-    works = SelectField("Pracuje", choices=[("True", "TAK"), ("False", "NIE"), ("all", "wszyscy")])
+    works = SelectField("Pracuje", choices=[("all", "wszyscy"), ("True", "TAK"), ("False", "NIE")])
     workplace = SelectField("Dział")
     function = SelectField("Funkcja")
     submit = SubmitField("Szukaj")

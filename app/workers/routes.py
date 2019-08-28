@@ -128,9 +128,9 @@ def workers_query():
 
     form = FilterWorkersForm()
     form.workplace.choices = [(str(workplace), str(workplace)) for workplace in Workplace.query.all()]
-    form.workplace.choices.append(("all", "wszystkie"))
+    form.workplace.choices.insert(0, ("all", "wszystkie"))
     form.function.choices = [(str(function), str(function)) for function in Function.query.all()]
-    form.function.choices.append(("all", "wszystkie"))
+    form.function.choices.insert(0, ("all", "wszystkie"))
     if form.validate_on_submit():
         workers = workers_utils.query_workers(form)
         return render_template("workers/workers_list.html", workers=workers)
