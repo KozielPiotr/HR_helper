@@ -3,7 +3,7 @@ from datetime import datetime
 
 from app.models import Worker
 from app.workers.workers_utils import add_worker_submit_form, create_worker_start_docs, upgrade_start_docs_status, \
-    query_workers
+    query_workers, edit_worker_basic_info
 
 
 @pytest.mark.usefixtures("db_session", "context")
@@ -126,3 +126,46 @@ def test_query_workers_function_field(sample_worker, sample_worker_query_form, s
     workers = query_workers(sample_worker_query_form)
     assert sample_worker in workers
 
+
+def test_edit_worker_basic_info(sample_worker, sample_workplace, sample_function):
+    data = {
+        "worker_id": sample_worker.id,
+        "name": sample_worker.name,
+        "workplace_id": sample_workplace.id,
+        "function_id": sample_function.id,
+        "contract_begin": "",
+        "contract_end": "",
+        "works": "True",
+        "work_end": ""
+    }
+
+    edit_worker_basic_info(data)
+    assert sample_worker.id == data["worker_id"]
+    assert sample_worker.name == data["name"]
+    assert sample_worker.workplace_id == data["workplace_id"]
+    assert sample_worker.function_id == data["function_id"]
+    assert sample_worker.contract_begin is None
+    assert sample_worker.contract_end is None
+    assert sample_worker.working is True
+    assert sample_worker.work_end is None
+
+    data["contract_begin"] = "2019-09-29"
+    edit_worker_basic_info(data)
+    assert sample_worker.contract_begin == datetime.strptime(data["contract_begin"], "%Y-%m-%d").date()
+
+    data["contract_end"] = "2019-12-18"
+    edit_worker_basic_info(data)
+    assert sample_worker.contract_end == datetime.strptime(data["contract_end"], "%Y-%m-%d").date()
+
+    data["works"] = "False"
+    edit_worker_basic_info(data)
+    assert sample_worker.working is False
+
+    works = sample_worker.working
+    data["works"] = "wrong input"
+    edit_worker_basic_info(data)
+    assert sample_worker.working == works
+
+    data["work_end"] = "2020-03-14"
+    edit_worker_basic_info(data)
+    assert sample_worker.work_end == datetime.strptime(data["work_end"], "%Y-%m-%d").date()
