@@ -1,6 +1,6 @@
 # HR_helper
 HR_helper is going to be a tool that helps to manage staff in your department, or even whole company.
-Say "good bye!" to dozens of 
+Say "good bye!" to dozens of inconvenient spreadsheets. Everything in one place, easy to find and update!
 
 ## Employees informations
 You can store informations about your employees. Informations like:
