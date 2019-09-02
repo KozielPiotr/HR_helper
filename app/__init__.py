@@ -28,4 +28,7 @@ app.register_blueprint(main_bp)
 from app.workers import bp as workers_bp
 app.register_blueprint(workers_bp)
 
+from app.start_docs import bp as start_docs_bp
+app.register_blueprint(start_docs_bp)
+
 from app import models

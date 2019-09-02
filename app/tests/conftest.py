@@ -1,5 +1,6 @@
 import pytest
 
+from app import app
 from app import db
 from app.models import User, Worker, Function, Role, EventKind, Event, Workplace, StartDoc, StartDocType
 from app.tests.utils import create, delete
@@ -10,6 +11,13 @@ def db_session():
     db.create_all()
     yield
     db.drop_all()
+
+
+@pytest.fixture(scope="module")
+def context():
+    ctx = app.app_context()
+    yield ctx.push()
+    ctx.pop()
 
 
 @pytest.fixture

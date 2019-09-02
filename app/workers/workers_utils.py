@@ -1,4 +1,4 @@
-"""Utilities for 'add_worker' route"""
+"""Utilities for 'add_worker' routes"""
 
 from datetime import datetime
 
@@ -139,5 +139,3 @@ def edit_worker_basic_info(data):
 
     db.session.add(worker)
     db.session.commit()
-
-    # TODO tests

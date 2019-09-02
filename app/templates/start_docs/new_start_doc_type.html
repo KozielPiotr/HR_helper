@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/start_docs/new-start-doc-type.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div id="formContent">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div id="new-doc-type-header">
+                <h1>Nowy typ dokumentu</h1>
+            </div>
+            <p>
+                {{ form.name(placeholder="Nowy typ dokumentu") }}<br>
+                {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <hr>
+            <p>{{ form.submit(id="btn-submit") }}</p>
+            <br>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
