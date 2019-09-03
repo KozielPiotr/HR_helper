@@ -1,8 +1,9 @@
 """Routes for start documents (main documents) section of main page"""
 
-from flask import render_template, flash
+from flask import render_template, flash, request
 from flask_login import login_required, current_user
 
+from app.models import StartDocType
 from app.start_docs import bp
 from app.utils.utilities import required_role
 from app.start_docs.forms import NewStartDocTypeForm
@@ -18,7 +19,7 @@ def new_start_doc_type():
     """
     required_role(current_user, "user")
 
-    title = "HR - nowy rodzaj dokumentu"
+    title = "HR - nowy rodzaj dokumentu głównego"
 
     form = NewStartDocTypeForm()
     if form.validate_on_submit():
@@ -28,3 +29,33 @@ def new_start_doc_type():
             flash("{} - nowy rodzaj dokumentu utworzony pomyślnie".format(form.name.data))
 
     return render_template("start_docs/new_start_doc_type.html", title=title, form=form)
+
+
+@bp.route("/list-start-doc-type", methods=["GET", "POST"])
+@login_required
+def list_start_doc_type():
+    """
+    Allows to change name of start document type
+    :return: renders template with list of all start document types
+    """
+    required_role(current_user, "user")
+
+    types = StartDocType.query.all()
+
+    title = "HR - lista rodzajów dokumentóœ głównych"
+
+    return render_template("start_docs/start_doc_types_list.html", title=title, types=types)
+
+
+@bp.route("/edit-start-doc-type", methods=["GET", "POST"])
+@login_required
+def edit_start_doc_type():
+    """
+    Changes name of start document type
+    :return: "OK" if successful and "ERROR" if not
+    """
+    data = request.json
+
+    if start_docs_utils.change_start_doc_type_name(data) is False:
+        return "ERROR"
+    return "OK"

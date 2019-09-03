@@ -1,5 +1,7 @@
 """Utilities for 'start_docs' routes"""
 
+from sqlalchemy.exc import SQLAlchemyError
+
 from app import db
 from app.models import StartDocType
 
@@ -17,3 +19,19 @@ def add_start_doc_type(form):
     db.session.add(new_doc_type)
     db.session.commit()
     return True
+
+
+def change_start_doc_type_name(data):
+    """
+    Changes name of start document type
+    :param data: dict with type's name before change and after change
+    :return: True if successful and False if not
+    """
+    doc_type = StartDocType.query.filter_by(name=data["name"]).first()
+    doc_type.name = data["changed"]
+    try:
+        db.session.add(doc_type)
+        db.session.commit()
+        return True
+    except SQLAlchemyError:
+        return False

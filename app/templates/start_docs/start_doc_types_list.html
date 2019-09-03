@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="{{ url_for('static', filename='css/workers/worker-list-start-docs.css') }}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/start_docs/edit_start_doc_type.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div class="formContent">
+        <table id="docs-list-table">
+            <thead>
+                <tr>
+                    <th class="th-left" colspan="3">Typy dokumentów głównych<br>(Kliknij w nazwę, żeby edytować)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for type in types %}
+                <tr>
+                    <td class="name td-left">
+                        <input class="doc-name" type="hidden" value="{{ type.name }}">
+                        <input class="transp-input changed" value="{{ type.name }}">
+                    </td>
+                    <td>
+                        <button class="submit-doc-changes btn-submit">Aktualizuj</button>
+                    </td>
+                    <td>
+                        Usuń
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
