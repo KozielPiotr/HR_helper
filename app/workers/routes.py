@@ -177,3 +177,21 @@ def edit_worker_basic():
     workers_utils.edit_worker_basic_info(data)
 
     return {"response": url_for("workers.show_worker", worker_id=data["worker_id"])}
+
+
+@bp.route("/delete-worker/<worker_id>", methods=["GET", "POST"])
+@login_required
+def delete_worker(worker_id):
+    """
+    Deletes worker and all related documents and events
+    :param worker_id: id of worker to be deleted
+    :return: redirect back to main page
+    """
+    required_role(current_user, "user")
+
+    if workers_utils.del_worker(worker_id) is True:
+        flash("Pracownik usunięty")
+    else:
+        flash("Błąd. Upewnij się, że taki pracownik istnieje. Ktoś mógł go usunąć w międzyczasie.")
+
+    return redirect(url_for("main.index"))

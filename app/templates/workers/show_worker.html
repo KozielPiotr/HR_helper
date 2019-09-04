@@ -97,7 +97,12 @@
             </div>
             <hr>
             <div class="data-footer">
-                <button id="basic-submit" class="btn-submit">Zapisz zmiany</button>
+                <input id="del-url" type="hidden" value="{{ url_for('workers.delete_worker', worker_id=worker.id) }}">
+                <button type="button" id="del-worker" class="btn-submit">!!! Usuń pracownika i wszystkie powiązane dokumenty !!!</button>
+            </div>
+            <hr>
+            <div class="data-footer">
+                <button type="submit" id="basic-submit" class="btn-submit">Zapisz zmiany</button>
             </div>
         </form>
     </div>

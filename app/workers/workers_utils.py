@@ -1,6 +1,7 @@
 """Utilities for 'add_worker' routes"""
 
 from datetime import datetime
+from sqlalchemy.exc import SQLAlchemyError
 
 from app import db
 from app.models import Worker, Function, Workplace, StartDoc, StartDocType
@@ -139,3 +140,28 @@ def edit_worker_basic_info(data):
 
     db.session.add(worker)
     db.session.commit()
+
+
+def del_worker(worker_id):
+    """
+    Deletes given worker from database.
+    Also removes every related documents and events
+    :param worker_id: id of worker to be removed
+    :return: True if successful and False if not
+    """
+    worker = Worker.query.filter_by(id=worker_id).first()
+    events = worker.events
+    docs = worker.start_docs
+    try:
+        db.session.delete(worker)
+        for event in events:
+            db.session.delete(event)
+        for doc in docs:
+            db.session.delete(doc)
+        db.session.commit()
+        return True
+    except SQLAlchemyError:
+        db.session.rollback()
+        return False
+
+    # TODO tests

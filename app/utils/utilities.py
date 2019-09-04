@@ -2,6 +2,7 @@
 
 """Utilities used in whole project"""
 
+from sqlalchemy.exc import SQLAlchemyError
 from flask import redirect, url_for, flash
 from flask_script import Command
 
@@ -38,3 +39,34 @@ class SuperUser(Command):
             db.session.commit()
         except:
             print("admin user already exist")
+
+
+def try_add_db_record(record):
+    """
+    Tries to add record to database
+    :param record: given record
+    :return: True if successful and False if not
+    """
+    try:
+        db.session.add(record)
+        db.session.commit()
+        return True
+    except SQLAlchemyError:
+        db.session.rollback()
+        return False
+
+
+def try_del_db_record(record):
+    """
+    Tries to delete record from database
+    :param record: given record
+    :return: True if successful and False if not
+    """
+    try:
+        db.session.delete(record)
+        db.session.commit()
+        return True
+    except SQLAlchemyError:
+        db.session.rollback()
+        return False
+

@@ -27,8 +27,8 @@ function basicInfo() {
 }
 
 $(document).ready(function() {
-    $("#change-basic").submit(function(e){
-        let form = $(this);
+    $("#basic-submit").click(function(e){
+        let form = $(this).closest("form");
         $.ajax({
             url   : form.attr("action"),
             type  : form.attr("method"),
@@ -45,3 +45,10 @@ $(document).ready(function() {
         return false;
     });
 });
+
+$(document).ready(function() {
+    $("#del-worker").click(function(){
+		let url = $(this).closest("div").find("#del-url").val();
+		window.location.replace(url)
+    });
+})

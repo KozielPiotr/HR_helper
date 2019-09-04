@@ -1,9 +1,8 @@
 """Utilities for 'start_docs' routes"""
 
-from sqlalchemy.exc import SQLAlchemyError
-
 from app import db
 from app.models import StartDocType
+from app.utils.utilities import try_add_db_record, try_del_db_record
 
 
 def add_start_doc_type(form):
@@ -29,13 +28,8 @@ def change_start_doc_type_name(data):
     """
     doc_type = StartDocType.query.filter_by(name=data["name"]).first()
     doc_type.name = data["changed"]
-    try:
-        db.session.add(doc_type)
-        db.session.commit()
-        return True
-    except SQLAlchemyError:
-        db.session.rollback()
-        return False
+
+    return try_add_db_record(doc_type)
 
 
 def delete_doctype(doctype_id):
@@ -46,10 +40,5 @@ def delete_doctype(doctype_id):
     :return: True if successful and False if not
     """
     doctype = StartDocType.query.filter_by(id=doctype_id).first()
-    try:
-        db.session.delete(doctype)
-        db.session.commit()
-        return True
-    except SQLAlchemyError:
-        db.session.rollback()
-        return False
+
+    return try_del_db_record(doctype)
