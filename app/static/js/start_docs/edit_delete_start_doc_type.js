@@ -3,7 +3,7 @@ $(document).ready(function() {
     	data = {
     	"name": $(this).closest("tr").find(".doc-name").val(),
     	"changed": $(this).closest("tr").find(".changed").val()
-    	}
+    	};
 
     	if (data.name != data.changed) {
     		$.ajax({
@@ -23,4 +23,13 @@ $(document).ready(function() {
         });
     	}
     })
+})
+
+
+$(document).ready(function() {
+    $(".del-doc-type").click(function(){
+		let type_id = $(this).closest("td").find(".doc-id").val();
+		let url = $(this).closest("td").find(".del-url").val();
+		window.location.replace(url)
+    });
 })

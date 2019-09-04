@@ -1,6 +1,6 @@
 """Routes for start documents (main documents) section of main page"""
 
-from flask import render_template, flash, request
+from flask import render_template, flash, request, redirect, url_for
 from flask_login import login_required, current_user
 
 from app.models import StartDocType
@@ -54,8 +54,27 @@ def edit_start_doc_type():
     Changes name of start document type
     :return: "OK" if successful and "ERROR" if not
     """
+    required_role(current_user, "user")
+
     data = request.json
 
     if start_docs_utils.change_start_doc_type_name(data) is False:
         return "ERROR"
     return "OK"
+
+
+@bp.route("/delete-start-doc-type/<doctype_id>", methods=["GET", "POST"])
+@login_required
+def delete_start_doc_type(doctype_id):
+    """
+    Deletes given type of start document
+    :param doctype_id: id of doctype to be deleted
+    :return: redirect back to list of start doc types (list_start_doc_type() function)
+    """
+    required_role(current_user, "user")
+
+    if start_docs_utils.delete_doctype(doctype_id) is True:
+        flash("Typ dokumentu usunięty")
+    else:
+        flash("Błąd. Upewnij się, że taki typ dokumentu istnieje. Ktoś mógł go usunąć w międzyczasie.")
+    return redirect(url_for("start_docs.list_start_doc_type"))

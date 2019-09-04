@@ -81,7 +81,4 @@ def sample_start_doc():
 def sample_start_doc_type():
     doc = StartDocType(name="sample_doc")
     yield create(doc)
-    try:
-        delete(doc)
-    except:
-        pass
+    delete(doc)

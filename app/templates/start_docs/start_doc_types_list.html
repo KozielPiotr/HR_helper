@@ -3,7 +3,7 @@
 {% block head %}
 <link href="{{ url_for('static', filename='css/workers/worker-list-start-docs.css') }}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='js/start_docs/edit_start_doc_type.js') }}"></script>
+<script src="{{ url_for('static', filename='js/start_docs/edit_delete_start_doc_type.js') }}"></script>
 
 {% endblock %}
 
@@ -28,6 +28,8 @@
                         <button class="submit-doc-changes btn-submit">Aktualizuj</button>
                     </td>
                     <td>
+                        <input class="doc-id" type="hidden" value="{{ type.id }}">
+                        <input class="del-url" type="hidden" value="{{ url_for('start_docs.delete_start_doc_type', doctype_id=type.id) }}">
                         <button class="del-doc-type btn-submit">Usuń</button>
                     </td>
                 </tr>

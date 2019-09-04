@@ -34,4 +34,22 @@ def change_start_doc_type_name(data):
         db.session.commit()
         return True
     except SQLAlchemyError:
+        db.session.rollback()
+        return False
+
+
+def delete_doctype(doctype_id):
+    """
+    Deletes given type of start document from database.
+    Also removes every related StartDoc db objects
+    :param doctype_id: id of doc type to be removed
+    :return: True if successful and False if not
+    """
+    doctype = StartDocType.query.filter_by(id=doctype_id).first()
+    try:
+        db.session.delete(doctype)
+        db.session.commit()
+        return True
+    except SQLAlchemyError:
+        db.session.rollback()
         return False

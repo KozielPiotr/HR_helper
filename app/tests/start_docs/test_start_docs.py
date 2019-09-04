@@ -1,8 +1,8 @@
 import pytest
 
-from app.models import StartDocType
+from app.models import StartDocType, StartDoc
 from app.start_docs.forms import NewStartDocTypeForm
-from app.start_docs.start_docs_utils import add_start_doc_type, change_start_doc_type_name
+from app.start_docs.start_docs_utils import add_start_doc_type, change_start_doc_type_name, delete_doctype
 from app.tests.utils import create
 
 
@@ -32,6 +32,19 @@ def test_change_start_doc_type_name(sample_start_doc_type):
     another_type = StartDocType(name="another name")
     create(another_type)
 
-    data["name"] = changed
-    data["changed"] = another_type.name
+    data["name"] = another_type.name
+    data["changed"] = changed
     assert change_start_doc_type_name(data) is False
+
+
+def test_delete_doctype(sample_worker, sample_start_doc, sample_start_doc_type):
+    sample_start_doc.start_doc_type = sample_start_doc_type.id
+    assert sample_start_doc in sample_start_doc_type.docs
+    sample_start_doc.worker_id = sample_worker.id
+    assert sample_start_doc in sample_worker.start_docs
+
+    delete_doctype(sample_start_doc_type.id)
+
+    assert sample_start_doc_type not in StartDocType.query.all()
+    assert sample_start_doc not in StartDoc.query.all()
+    assert sample_start_doc not in sample_worker.start_docs
