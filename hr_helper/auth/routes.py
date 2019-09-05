@@ -1,14 +1,14 @@
 """Routes for user authentication"""
 
-from flask import redirect, url_for, flash, request
-from flask import render_template
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
-from app.auth import bp
-from app.auth.forms import LoginForm
-from app.models import User
+from hr_helper.auth.forms import LoginForm
+from hr_helper.models import User
 
+
+bp = Blueprint("auth", __name__)
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():

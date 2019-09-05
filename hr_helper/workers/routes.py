@@ -1,14 +1,15 @@
 """Routes for workers section of main page"""
 
-from flask import render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 
-from app.models import Workplace, Function, Worker, StartDocType
-from app.workers import bp
-from app.workers.forms import NewWorkerForm, NewStartDocForm, FilterWorkersForm
-from app.utils.utilities import required_role
-from app.workers import workers_utils
+from hr_helper.models import Workplace, Function, Worker, StartDocType
+from hr_helper.workers.forms import NewWorkerForm, NewStartDocForm, FilterWorkersForm
+from hr_helper.utils.utilities import required_role
+from hr_helper.workers import workers_utils
 
+
+bp = Blueprint("workers", __name__)
 
 @bp.route("/add-workers", methods=["GET", "POST"])
 @login_required

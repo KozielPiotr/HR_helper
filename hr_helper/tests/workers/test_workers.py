@@ -1,9 +1,9 @@
 import pytest
 from datetime import datetime
 
-from app.models import Worker, Event, StartDoc
-from app.tests.utils import create
-from app.workers.workers_utils import add_worker_submit_form, create_worker_start_docs, upgrade_start_docs_status, \
+from hr_helper.models import Worker, Event, StartDoc
+from hr_helper.tests.utils import create
+from hr_helper.workers.workers_utils import add_worker_submit_form, create_worker_start_docs, upgrade_start_docs_status, \
     query_workers, edit_worker_basic_info, del_worker
 
 

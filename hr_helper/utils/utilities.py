@@ -1,13 +1,11 @@
-# pylint: disable=inconsistent-return-statements
-
 """Utilities used in whole project"""
 
 from sqlalchemy.exc import SQLAlchemyError
 from flask import redirect, url_for, flash
 from flask_script import Command
 
-from app import db
-from app.models import User, Role
+from hr_helper.app import db
+from hr_helper.models import User, Role
 
 
 def required_role(user, *roles):

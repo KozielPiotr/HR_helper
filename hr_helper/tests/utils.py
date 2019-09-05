@@ -1,6 +1,6 @@
 import json
 
-from app import db
+from hr_helper.app import db
 
 
 def create(db_item):

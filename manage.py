@@ -1,8 +1,8 @@
 from flask_migrate import MigrateCommand
 from flask_script import Manager
 
-from app import app
-from app.utils.utilities import SuperUser
+from hr_helper import app
+from hr_helper.utils.utilities import SuperUser
 
 
 manager = Manager(app)

@@ -1,11 +1,11 @@
 #-*- coding: utf-8 -*-
-# pylint: disable=missing-docstring, too-few-public-methods, no-member, invalid-name
+# pylint: disable=too-few-public-methods
 
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app import db, login
+from hr_helper.app import db, login
 
 
 class User(db.Model, UserMixin):

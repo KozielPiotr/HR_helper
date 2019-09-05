@@ -1,14 +1,15 @@
 """Routes for start documents (main documents) section of main page"""
 
-from flask import render_template, flash, request, redirect, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, current_user
 
-from app.models import StartDocType
-from app.start_docs import bp
-from app.utils.utilities import required_role
-from app.start_docs.forms import NewStartDocTypeForm
-from app.start_docs import start_docs_utils
+from hr_helper.models import StartDocType
+from hr_helper.utils.utilities import required_role
+from hr_helper.start_docs.forms import NewStartDocTypeForm
+from hr_helper.start_docs import start_docs_utils
 
+
+bp = Blueprint("start_docs", __name__)
 
 @bp.route("/new-start-doc-type", methods=["GET", "POST"])
 @login_required
