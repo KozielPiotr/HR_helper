@@ -163,5 +163,3 @@ def del_worker(worker_id):
     except SQLAlchemyError:
         db.session.rollback()
         return False
-
-    # TODO tests

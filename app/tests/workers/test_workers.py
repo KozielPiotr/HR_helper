@@ -1,9 +1,10 @@
 import pytest
 from datetime import datetime
 
-from app.models import Worker
+from app.models import Worker, Event, StartDoc
+from app.tests.utils import create
 from app.workers.workers_utils import add_worker_submit_form, create_worker_start_docs, upgrade_start_docs_status, \
-    query_workers, edit_worker_basic_info
+    query_workers, edit_worker_basic_info, del_worker
 
 
 @pytest.mark.usefixtures("db_session", "context")
@@ -169,3 +170,19 @@ def test_edit_worker_basic_info(sample_worker, sample_workplace, sample_function
     data["work_end"] = "2020-03-14"
     edit_worker_basic_info(data)
     assert sample_worker.work_end == datetime.strptime(data["work_end"], "%Y-%m-%d").date()
+
+
+def test_del_worker(sample_worker, sample_start_doc, sample_event):
+    sample_worker.assign_start_doc(sample_start_doc)
+    sample_worker.assign_event(sample_event)
+    create(sample_worker)
+
+    assert sample_worker in Worker.query.all()
+    assert sample_event in sample_worker.events
+    assert sample_start_doc in sample_worker.start_docs
+
+    del_worker(sample_worker.id)
+
+    assert sample_worker not in Worker.query.all()
+    assert sample_event not in Event.query.all()
+    assert sample_start_doc not in StartDoc.query.all()
