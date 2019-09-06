@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, missing-docstring
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy

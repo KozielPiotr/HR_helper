@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods, missing-docstring
 
 from datetime import datetime
 from flask_login import UserMixin

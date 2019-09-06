@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-# pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position, missing-docstring
 
 from hr_helper.app import app, db
 from hr_helper import models
