@@ -1,8 +1,8 @@
 """Utilities for 'start_docs' routes"""
 
-from app import db
-from app.models import StartDocType
-from app.utils.utilities import try_add_db_record, try_del_db_record
+from hr_helper.app import db
+from hr_helper.models import StartDocType
+from hr_helper.utils.utilities import try_add_db_record, try_del_db_record
 
 
 def add_start_doc_type(form):

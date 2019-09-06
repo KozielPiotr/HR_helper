@@ -1,7 +1,7 @@
 import pytest
 from datetime import datetime
 
-from app.workers.forms import NewWorkerForm, FilterWorkersForm
+from hr_helper.workers.forms import NewWorkerForm, FilterWorkersForm
 
 
 @pytest.fixture

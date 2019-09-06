@@ -1,9 +1,9 @@
 import pytest
 
-from app.models import StartDocType, StartDoc
-from app.start_docs.forms import NewStartDocTypeForm
-from app.start_docs.start_docs_utils import add_start_doc_type, change_start_doc_type_name, delete_doctype
-from app.tests.utils import create
+from hr_helper.models import StartDocType, StartDoc
+from hr_helper.start_docs.forms import NewStartDocTypeForm
+from hr_helper.start_docs.start_docs_utils import add_start_doc_type, change_start_doc_type_name, delete_doctype
+from hr_helper.tests.utils import create
 
 
 @pytest.mark.usefixtures("db_session", "context")

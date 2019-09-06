@@ -1,9 +1,8 @@
 import pytest
 
-from app import app
-from app import db
-from app.models import User, Worker, Function, Role, EventKind, Event, Workplace, StartDoc, StartDocType
-from app.tests.utils import create, delete
+from hr_helper.app import app, db
+from hr_helper.models import User, Worker, Function, Role, EventKind, Event, Workplace, StartDoc, StartDocType
+from hr_helper.tests.utils import create, delete
 
 
 @pytest.fixture(scope="module")

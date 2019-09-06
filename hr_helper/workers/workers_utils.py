@@ -3,8 +3,8 @@
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 
-from app import db
-from app.models import Worker, Function, Workplace, StartDoc, StartDocType
+from hr_helper.app import db
+from hr_helper.models import Worker, Function, Workplace, StartDoc, StartDocType
 
 
 def add_worker_submit_form(form):
