@@ -8,6 +8,7 @@ from hr_helper.utils.utilities import required_role
 
 bp = Blueprint("main", __name__)
 
+
 @bp.route("/")
 @bp.route("/index", methods=["GET", "POST"])
 @login_required
