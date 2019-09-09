@@ -11,6 +11,7 @@ from hr_helper.start_docs import start_docs_utils
 
 bp = Blueprint("start_docs", __name__)
 
+
 @bp.route("/new-start-doc-type", methods=["GET", "POST"])
 @login_required
 def new_start_doc_type():
