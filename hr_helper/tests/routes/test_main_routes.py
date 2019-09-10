@@ -22,13 +22,13 @@ def test_index():
         assert resp.status_code == 302
         resp = client.get("/index", follow_redirects=True)
         assert resp.status_code == 200
-        assert "logowanie" in resp.get_data(as_text=True)
+        assert "HR - logowanie" in resp.get_data(as_text=True)
 
         # logs user in and checks if main page is loaded
         resp = login(client=client, username="Test", password="test")
         data = resp.get_data(as_text=True)
         assert resp.status_code == 200
-        assert "strona główna" in data
+        assert "HR - strona główna" in data
 
         # checks main page content
         for card in main_page_cards:
@@ -39,4 +39,3 @@ def test_index():
         # checks navbar content
         assert "GŁÓWNA" in data
         assert "WYLOGUJ Test" in data
-
