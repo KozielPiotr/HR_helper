@@ -10,6 +10,7 @@ from hr_helper.models import User
 
 bp = Blueprint("auth", __name__)
 
+
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     """
