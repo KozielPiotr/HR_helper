@@ -50,6 +50,7 @@ def test_links():
         resp = client.get("/index")
         data = resp.get_data(as_text=True)
         assert url_for("main.index") in data
+        assert url_for("auth.logout") in data
         assert url_for("workers.add_worker") in data
         assert url_for("workers.workers_query") in data
         assert url_for("start_docs.new_start_doc_type") in data
