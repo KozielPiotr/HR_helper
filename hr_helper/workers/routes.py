@@ -12,7 +12,7 @@ from hr_helper.workers import workers_utils
 bp = Blueprint("workers", __name__)
 
 
-@bp.route("/add-workers", methods=["GET", "POST"])
+@bp.route("/add-worker", methods=["GET", "POST"])
 @login_required
 def add_worker():
     """

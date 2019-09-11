@@ -1,4 +1,5 @@
 import pytest
+from flask import url_for
 
 from hr_helper.app import app
 from hr_helper.tests.routes.utils import login
@@ -39,3 +40,17 @@ def test_index():
         # checks navbar content
         assert "GŁÓWNA" in data
         assert "WYLOGUJ Test" in data
+
+
+@pytest.mark.usefixtures("sample_user")
+def test_links():
+    client = app.test_client()
+    with client:
+        login(client=client, username="Test", password="test")
+        resp = client.get("/index")
+        data = resp.get_data(as_text=True)
+        assert url_for("main.index") in data
+        assert url_for("workers.add_worker") in data
+        assert url_for("workers.workers_query") in data
+        assert url_for("start_docs.new_start_doc_type") in data
+        assert url_for("start_docs.list_start_doc_type") in data
