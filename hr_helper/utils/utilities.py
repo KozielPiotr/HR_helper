@@ -5,7 +5,7 @@ from flask import redirect, url_for, flash
 from flask_script import Command
 
 from hr_helper.app import db
-from hr_helper.models import User, Role
+from hr_helper.models import User, Role, Worker, Workplace, Function
 
 
 def required_role(user, *roles):
@@ -21,22 +21,47 @@ def required_role(user, *roles):
         return redirect(url_for("main.index"))
 
 
-class SuperUser(Command):
+class SamplePopulate(Command):
     """
-    Creates user with administrator role
+    Creates user with administrator role and sample records from other tables
     """
     def run(self):
         try:
             admin = User(username="admin")
             admin.set_password("a")
+
             admin_role = Role(name="role")
             user_role = Role(name="user")
+
             admin.assign_role(admin_role)
             admin.assign_role(user_role)
-            db.session.add_all([admin, admin_role, user_role])
+
+            worker_1 = Worker(name="Sample Worker 1", working=True)
+            worker_2 = Worker(name="Sample Worker 2", working=True)
+            worker_3 = Worker(name="Sample Worker 3", working=False)
+
+            workplace_1 = Workplace(name="Sample workplace 1")
+            workplace_2 = Workplace(name="Sample workplace 2")
+            
+            workplace_1.set_workplace(worker_1)
+            workplace_1.set_workplace(worker_2)
+            workplace_2.set_workplace(worker_3)
+
+            worker_3.workplace_id = workplace_2.id
+
+            function_1 = Function(name="Sample function 1")
+            function_2 = Function(name="Sample function 2")
+
+            function_1.set_function(worker_1)
+            function_1.set_function(worker_3)
+            function_2.set_function(worker_2)
+
+            db.session.add_all([admin, admin_role, user_role, worker_1, worker_2, worker_3, workplace_1, workplace_2,
+                                function_1, function_2])
             db.session.commit()
-        except:
-            print("admin user already exist")
+        except SQLAlchemyError:
+            db.session.rollback()
+            print("\nAdding sample records failed.\nProbably duplicated entries.\n")
 
 
 def try_add_db_record(record):
