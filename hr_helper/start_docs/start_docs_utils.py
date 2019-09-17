@@ -2,7 +2,7 @@
 
 from hr_helper.app import db
 from hr_helper.models import StartDocType
-from hr_helper.utils.utilities import try_add_db_record, try_del_db_record
+from hr_helper.utils.utilities import try_add_db_records, try_del_db_records
 
 
 def add_start_doc_type(form):
@@ -29,16 +29,16 @@ def change_start_doc_type_name(data):
     doc_type = StartDocType.query.filter_by(name=data["name"]).first()
     doc_type.name = data["changed"]
 
-    return try_add_db_record(doc_type)
+    return try_add_db_records([doc_type])
 
 
-def delete_doctype(doctype_id):
+def remove_start_doctype(doctype_id):
     """
     Deletes given type of start document from database.
     Also removes every related StartDoc db objects
     :param doctype_id: id of doc type to be removed
     :return: True if successful and False if not
     """
-    doctype = StartDocType.query.filter_by(id=doctype_id).first()
+    doctypes = StartDocType.query.filter_by(id=doctype_id).first()
 
-    return try_del_db_record(doctype)
+    return try_del_db_records([doctypes])

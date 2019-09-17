@@ -2,7 +2,7 @@ import pytest
 
 from hr_helper.models import StartDocType, StartDoc
 from hr_helper.start_docs.forms import NewStartDocTypeForm
-from hr_helper.start_docs.start_docs_utils import add_start_doc_type, change_start_doc_type_name, delete_doctype
+from hr_helper.start_docs.start_docs_utils import add_start_doc_type, change_start_doc_type_name, remove_start_doctype
 from hr_helper.tests.utils import create
 
 
@@ -43,7 +43,7 @@ def test_delete_doctype(sample_worker, sample_start_doc, sample_start_doc_type):
     sample_start_doc.worker_id = sample_worker.id
     assert sample_start_doc in sample_worker.start_docs
 
-    delete_doctype(sample_start_doc_type.id)
+    remove_start_doctype(sample_start_doc_type.id)
 
     assert sample_start_doc_type not in StartDocType.query.all()
     assert sample_start_doc not in StartDoc.query.all()

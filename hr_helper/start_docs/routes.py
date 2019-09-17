@@ -75,7 +75,7 @@ def delete_start_doc_type(doctype_id):
     """
     required_role(current_user, "user")
 
-    if start_docs_utils.delete_doctype(doctype_id) is True:
+    if start_docs_utils.remove_start_doctype(doctype_id) is True:
         flash("Typ dokumentu usunięty")
     else:
         flash("Błąd. Upewnij się, że taki typ dokumentu istnieje. Ktoś mógł go usunąć w międzyczasie.")

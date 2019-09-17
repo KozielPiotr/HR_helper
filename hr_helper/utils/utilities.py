@@ -64,14 +64,15 @@ class SamplePopulate(Command):
             print("\nAdding sample records failed.\nProbably duplicated entries.\n")
 
 
-def try_add_db_record(record):
+def try_add_db_records(records):
     """
-    Tries to add record to database
-    :param record: given record
+    Tries to add records to database
+    :param records: list of given records
     :return: True if successful and False if not
     """
     try:
-        db.session.add(record)
+        for record in records:
+            db.session.add(record)
         db.session.commit()
         return True
     except SQLAlchemyError:
@@ -79,17 +80,17 @@ def try_add_db_record(record):
         return False
 
 
-def try_del_db_record(record):
+def try_del_db_records(records):
     """
-    Tries to delete record from database
-    :param record: given record
+    Tries to delete records from database
+    :param records: list of given records
     :return: True if successful and False if not
     """
     try:
-        db.session.delete(record)
+        for record in records:
+            db.session.delete(record)
         db.session.commit()
         return True
     except SQLAlchemyError:
         db.session.rollback()
         return False
-
