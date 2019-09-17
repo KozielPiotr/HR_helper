@@ -21,6 +21,32 @@
     </div>
     <div class="card func-group" style="width: 18rem;">
         <div class="card-header">
+            <h2>Użytkownicy</h2>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <button class="btn-main-link"><a href="#" class="a-btn-main">Nowy użytkownik</a></button>
+            </li>
+            <li class="list-group-item">
+                <button class="btn-main-link"><a href="#" class="a-btn-main">Edytuj użytkownika</a></button>
+            </li>
+        </ul>
+    </div>
+    <div class="card func-group" style="width: 18rem;">
+        <div class="card-header">
+            <h2>Dokumenty główne</h2>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <button class="btn-main-link"><a href="{{ url_for('start_docs.new_start_doc_type') }}" class="a-btn-main">Nowy dokument</a></button>
+            </li>
+            <li class="list-group-item">
+                <button class="btn-main-link"><a href="{{ url_for('start_docs.list_start_doc_type') }}" class="a-btn-main">Edytuj/usuń dokument</a></button>
+            </li>
+        </ul>
+    </div>
+    <div class="card func-group" style="width: 18rem;">
+        <div class="card-header">
             <h2>Działy</h2>
         </div>
         <ul class="list-group list-group-flush">
@@ -49,36 +75,8 @@
             <li class="list-group-item">
                 <button class="btn-main-link"><a href="#" class="a-btn-main">Lista zdarzeń</a></button>
             </li>
-        </ul>
-    </div>
-    <div class="card func-group" style="width: 18rem;">
-        <div class="card-header">
-            <h2>Użytkownicy</h2>
-        </div>
-        <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <button class="btn-main-link"><a href="#" class="a-btn-main">Nowy użytkownik</a></button>
-            </li>
-            <li class="list-group-item">
-                <button class="btn-main-link"><a href="#" class="a-btn-main">Edytuj użytkownika</a></button>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="main-container">
-    <div class="card func-group" style="width: 18rem;">
-        <div class="card-header">
-            <h2>Dokumenty główne</h2>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <button class="btn-main-link"><a href="{{ url_for('start_docs.new_start_doc_type') }}" class="a-btn-main">Nowy dokument</a></button>
-            </li>
-            <li class="list-group-item">
-                <button class="btn-main-link"><a href="{{ url_for('start_docs.list_start_doc_type') }}" class="a-btn-main">Edytuj/usuń dokument</a></button>
-            </li>
-            <li class="list-group-item">
-                <button class="btn-main-link"><a href="#" class="a-btn-main">Zestawienie dokumentów</a></button>
+                <button class="btn-main-link"><a href="#" class="a-btn-main">Zestawienie zdarzeń</a></button>
             </li>
         </ul>
     </div>

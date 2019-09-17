@@ -7,9 +7,9 @@ from hr_helper.tests.routes.utils import login
 main_page_cards = {
     "Pracownicy": ["Nowy pracownik", "Wyszukaj pracownika"],
     "Działy": ["Nowy dział", "Edytuj dział", "Usuń dział"],
-    "Zdarzenia": ["Stwórz typ zdarzenia", "Nowe zdarzenie", "Lista zdarzeń"],
+    "Zdarzenia": ["Stwórz typ zdarzenia", "Nowe zdarzenie", "Lista zdarzeń", "Zestawienie zdarzeń"],
     "Użytkownicy": ["Nowy użytkownik", "Edytuj użytkownika"],
-    "Dokumenty główne": ["Nowy dokument", "Edytuj/usuń dokument", "Zestawienie dokumentów"]
+    "Dokumenty główne": ["Nowy dokument", "Edytuj/usuń dokument"]
 }
 
 
