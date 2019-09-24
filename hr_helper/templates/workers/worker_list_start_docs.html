@@ -28,14 +28,14 @@
                         </td>
                         <td>
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" {% if doc.delivered %} checked {% endif %} class="custom-control-input delivered" id="{{ doc }}-delivered" value="{{ doc }}">
-                                <label class="custom-control-label input-label" for="{{ doc }}-delivered"></label>
+                                <input type="checkbox" {% if doc.delivered %} checked {% endif %} class="custom-control-input delivered" id="{{ doc.id }}-delivered" value="{{ doc }}">
+                                <label class="custom-control-label input-label" for="{{ doc.id }}-delivered"></label>
                             </div>
                         </td>
                         <td>
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" {% if doc.sent_to_hr %} checked {% endif %} class="custom-control-input sent" id="{{ doc }}-sent-to-hr" value="{{ doc }}">
-                                <label class="custom-control-label input-label" for="{{ doc }}-sent-to-hr"></label>
+                                <input type="checkbox" {% if doc.sent_to_hr %} checked {% endif %} class="custom-control-input sent" id="{{ doc.id }}-sent-to-hr" value="{{ doc }}">
+                                <label class="custom-control-label input-label" for="{{ doc.id }}-sent-to-hr"></label>
                             </div>
                         </td>
                         <td>

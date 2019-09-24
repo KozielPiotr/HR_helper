@@ -1,18 +1,19 @@
 function chosenDocs() {
 	data = {}
+	let check = true
 	$(".docs-data").each(function() {
 		id = this.id
 
 		if (!$(this).find(".delivered").prop("checked") && $(this).find(".sent").prop("checked")) {
 			alert("Nie można wysłać niedostarczonego dokumentu.")
-			return false
+			check = false
 		} else if (!$(this).find(".sent").prop("checked") && $(this).find(".sent-date").val()!=="") {
 			alert("Zaznaczona data wysyłki dokumentu, który nie został wysłany.")
-			return false
+			check =  false
 		} else if ($(this).find(".sent").prop("checked") && $(this).find(".sent-date").val()==="") {
 			withoutDate = window.confirm("Dokument wysłany do kadr bez zaznaczonej daty.\nKontynuować?")
 			if (!withoutDate) {
-				return false
+				check =  false
 			}
 		};
 
@@ -23,7 +24,11 @@ function chosenDocs() {
 			"notes": $(this).find(".notes").val()
 		}
 	});
-	return data
+	if (check === true) {
+		return data
+	} else {
+		return false
+	}
 }
 
 $(document).ready(function() {
