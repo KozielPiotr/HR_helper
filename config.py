@@ -4,7 +4,7 @@ import os
 
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-DEFAULT_DB_URI = 'sqlite:///' + os.path.join(PROJECT_DIR, 'app.db')
+DEFAULT_DB_URI = "DATABASE_URL"
 
 
 APP_CONFIG = os.environ.get("APP_CONFIG", "Development")
