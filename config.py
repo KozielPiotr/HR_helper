@@ -17,7 +17,7 @@ class Config(object):
     DEBUG = False
 
     SECRET_KEY = os.environ.get("SECRET_KEY", "dummy")
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI", DEFAULT_DB_URI)
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URIL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
