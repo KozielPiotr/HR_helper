@@ -101,7 +101,7 @@ def worker_start_docs():
 @login_required
 def start_docs_status_upgrade():
     """
-    Checks if data delivered by front is correct and upgrades start documents records
+    Checks if data delivered by front is correct and updates start documents records
     :return: url to main page if data is correct. Else returns False
     """
 

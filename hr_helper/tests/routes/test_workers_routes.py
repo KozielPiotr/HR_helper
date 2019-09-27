@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime
 from flask import json, url_for
 
 from hr_helper.models import Worker, StartDocType, StartDoc
@@ -105,3 +106,33 @@ def test_worker_start_docs_post(sample_worker, sample_start_doc, sample_start_do
         assert len(sample_start_doc_type.docs) == 1
         doc = sample_start_doc_type.docs[0]
         assert "{}-delivered".format(doc.id) in data
+
+
+@pytest.mark.usefixtures("db_session", "sample_user", "context")
+def test_start_docs_status_upgrade(sample_worker, sample_start_doc):
+    client = app.test_client()
+    with client:
+        login(client=client, username="Test", password="test")
+
+        doc_id = sample_start_doc.id
+        data = {doc_id: {
+            "delivered": True,
+            "sent": True,
+            "sent-date": "2019-07-25",
+            "notes": "sample note"
+        }}
+
+        assert sample_start_doc.delivered is False
+        assert sample_start_doc.sent_to_hr is False
+        assert sample_start_doc.sent_date is None
+        assert sample_start_doc.sent_date is None
+
+        resp = client.post("/start-docs-status-upgrade",
+                           data=json.dumps(data),
+                           content_type="application/json")
+        assert resp.status_code == 200
+
+        assert sample_start_doc.delivered is data[doc_id]["delivered"]
+        assert sample_start_doc.sent_to_hr is data[doc_id]["sent"]
+        assert sample_start_doc.sent_date == datetime.strptime(data[doc_id]["sent-date"], "%Y-%m-%d").date()
+        assert sample_start_doc.notes == data[doc_id]["notes"]
