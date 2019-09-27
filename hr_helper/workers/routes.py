@@ -70,7 +70,7 @@ def create_start_docs(worker_name):
     return url_for("workers.worker_start_docs", worker_name=worker_name)
 
 
-@bp.route("/worker_start-docs", methods=["GET", "POST"])
+@bp.route("/worker-start-docs", methods=["GET", "POST"])
 @login_required
 def worker_start_docs():
     """
@@ -83,7 +83,7 @@ def worker_start_docs():
     worker_name = request.args.get("worker_name")
     worker = Worker.query.filter_by(name=worker_name).first()
 
-    title = "HR dokumenty główne: {}".format(worker.name)
+    title = "HR - dokumenty główne: {}".format(worker.name)
 
     form = NewStartDocForm()
     form.doc_type.choices = [(str(doc_type), str(doc_type)) for doc_type in StartDocType.query.all()]

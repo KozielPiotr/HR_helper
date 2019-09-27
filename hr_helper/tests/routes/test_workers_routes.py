@@ -1,5 +1,5 @@
 import pytest
-from flask import json
+from flask import json, url_for
 
 from hr_helper.models import Worker, StartDocType, StartDoc
 from hr_helper.app import app
@@ -68,3 +68,40 @@ def test_create_start_docs(sample_user, sample_worker, sample_start_doc_type):
         start_doc = StartDoc.query.filter_by(start_doc_type=sample_start_doc_type.id).first()
         assert start_doc in StartDoc.query.all()
         assert start_doc in sample_worker.start_docs
+
+
+@pytest.mark.usefixtures("db_session", "sample_user", "context")
+def test_worker_start_docs_connection_and_get(sample_worker, sample_start_doc, sample_start_doc_type):
+    client = app.test_client()
+    with client:
+        login(client=client, username="Test", password="test")
+
+        sample_worker.assign_start_doc(sample_start_doc)
+        sample_start_doc_type.assign_document(sample_start_doc)
+
+        resp = client.get(url_for("workers.worker_start_docs"), query_string=dict(worker_name=sample_worker.name))
+        data = resp.get_data(as_text=True)
+
+        # checking page connection
+        assert resp.status_code == 200
+        assert "HR - dokumenty główne: {}".format(sample_worker.name) in data
+        assert str(sample_start_doc.id) in data
+        assert sample_start_doc_type.name in data
+
+
+@pytest.mark.usefixtures("db_session", "sample_user", "context")
+def test_worker_start_docs_post(sample_worker, sample_start_doc, sample_start_doc_type):
+    client = app.test_client()
+    with client:
+        login(client=client, username="Test", password="test")
+
+        assert not sample_start_doc_type.docs
+        resp = client.post(url_for("workers.worker_start_docs"),
+                           query_string=dict(worker_name=sample_worker.name),
+                           data=dict(doc_type=[sample_start_doc_type.name]),
+                           follow_redirects=True)
+        data = resp.get_data(as_text=True)
+        assert sample_start_doc_type.docs
+        assert len(sample_start_doc_type.docs) == 1
+        doc = sample_start_doc_type.docs[0]
+        assert "{}-delivered".format(doc.id) in data
